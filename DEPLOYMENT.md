@@ -20,7 +20,14 @@ Inside the Vercel project settings, go to **Environment Variables** and add the 
 | `VITE_SUPABASE_ANON_KEY` | `sb_publishable_S3iB6JCg8uXjVa8NOyrCFA_J_wDNf8D` |
 
 ## 4. Deploy!
-Click **Deploy**. Vercel will build your React app and provide you with a live URL.
+Click **Deploy**. Vercel will build your React app. Your live site is now at:
+**[https://mod-idea-hub.vercel.app/](https://mod-idea-hub.vercel.app/)**
+
+### 5. Critical: Update Supabase Redirects
+To ensure email confirmations work, you **must** update your Supabase settings:
+1. Go to [Auth > URL Configuration](https://supabase.com/dashboard/project/znnwktgqlmnkubsighto/auth/url-configuration)
+2. Set **Site URL** to `https://mod-idea-hub.vercel.app/`
+3. Add `https://mod-idea-hub.vercel.app/**` to **Additional Redirect URLs**.
 
 ---
 
