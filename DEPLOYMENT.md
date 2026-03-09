@@ -1,0 +1,29 @@
+# Deployment Guide - Mod & Plugin Ideas Hub
+
+Follow these steps to deploy your website to **Vercel**.
+
+## 1. Prepare for Deployment
+Ensure all your changes are committed to GitHub.
+
+## 2. Deploy via Vercel Dashboard
+1. Go to [vercel.com](https://vercel.com) and log in.
+2. Click **Add New** > **Project**.
+3. Import your GitHub repository.
+4. In the **Build & Development Settings**, ensure the Framework Preset is set to **Vite**.
+
+## 3. Configure Environment Variables
+Inside the Vercel project settings, go to **Environment Variables** and add the following from your `.env` file:
+
+| Key | Value |
+| :--- | :--- |
+| `VITE_SUPABASE_URL` | `https://znnwktgqlmnkubsighto.supabase.co` |
+| `VITE_SUPABASE_ANON_KEY` | `sb_publishable_S3iB6JCg8uXjVa8NOyrCFA_J_wDNf8D` |
+
+## 4. Deploy!
+Click **Deploy**. Vercel will build your React app and provide you with a live URL.
+
+---
+
+### Tips
+- Use the **Vercel CLI** (`npm i -g vercel`) and run `vercel` in your project folder for a faster workflow.
+- Any future pushes to your GitHub repository will automatically trigger a new deployment.
