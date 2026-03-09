@@ -12,9 +12,9 @@ const LeaderboardItem = ({ rank, username, reputation, mods_count, ideas_count, 
         className="bg-neutral-dark/40 border border-slate-800 rounded-2xl p-4 flex items-center gap-6 hover:bg-neutral-dark/60 transition-colors group"
     >
         <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-lg italic shadow-lg ${rank === 1 ? 'bg-yellow-500/20 text-yellow-500 border border-yellow-500/30' :
-                rank === 2 ? 'bg-slate-300/20 text-slate-300 border border-slate-300/30' :
-                    rank === 3 ? 'bg-amber-600/20 text-amber-600 border border-amber-600/30' :
-                        'bg-slate-800 text-slate-500'
+            rank === 2 ? 'bg-slate-300/20 text-slate-300 border border-slate-300/30' :
+                rank === 3 ? 'bg-amber-600/20 text-amber-600 border border-amber-600/30' :
+                    'bg-slate-800 text-slate-500'
             }`}>
             {rank}
         </div>
@@ -86,13 +86,19 @@ export default function Leaderboard() {
                         <Loader2 size={48} className="animate-spin text-primary opacity-50" />
                         <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Calculating Global Standings...</span>
                     </div>
+                ) : error ? (
+                    <div className="text-center py-20 bg-red-500/10 border border-red-500/20 rounded-3xl">
+                        <p className="text-red-400 font-bold uppercase tracking-widest text-xs">Error Accessing Rankings</p>
+                        <p className="text-slate-400 text-sm mt-2">{error}</p>
+                    </div>
                 ) : (
                     <>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {topThree.map((item, i) => (
                                 <motion.div
                                     key={item.id}
-                                    whileHover={{ y: -10 }}
+                                    whileHover={{ y: -8, scale: 1.005 }}
+                                    transition={{ type: 'spring', damping: 25, stiffness: 200 }}
                                     className={`relative bg-neutral-dark border border-slate-800 rounded-3xl p-8 flex flex-col items-center gap-4 shadow-2xl overflow-hidden ${i === 0 ? 'border-yellow-500/30' : ''
                                         }`}
                                 >
@@ -102,16 +108,16 @@ export default function Leaderboard() {
                                         </div>
                                     )}
                                     <div className={`relative p-1 rounded-4xl border-4 ${i === 0 ? 'border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' :
-                                            i === 1 ? 'border-slate-300 shadow-[0_0_20px_rgba(203,213,225,0.2)]' :
-                                                'border-amber-600 shadow-[0_0_15px_rgba(217,119,6,0.2)]'
+                                        i === 1 ? 'border-slate-300 shadow-[0_0_20px_rgba(203,213,225,0.2)]' :
+                                            'border-amber-600 shadow-[0_0_15px_rgba(217,119,6,0.2)]'
                                         }`}>
                                         <img src={item.avatar_url || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${item.username}`} className="w-24 h-24 rounded-3xl bg-slate-800 object-cover" />
                                     </div>
                                     <div className="text-center">
                                         <h3 className="text-2xl font-black text-slate-100 italic uppercase truncate max-w-[200px]">{item.username}</h3>
                                         <span className={`text-[10px] font-bold uppercase tracking-widest ${i === 0 ? 'text-yellow-500' :
-                                                i === 1 ? 'text-slate-300' :
-                                                    'text-amber-600'
+                                            i === 1 ? 'text-slate-300' :
+                                                'text-amber-600'
                                             }`}>
                                             RANK #{i + 1}
                                         </span>

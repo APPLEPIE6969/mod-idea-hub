@@ -54,7 +54,7 @@ function IdeaFeed({ ideas, loading, error, setIsModalOpen, onVote, categoryFilte
                 <motion.div
                   layoutId="activeTab"
                   className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
-                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                  transition={{ type: 'spring', stiffness: 300, damping: 35 }}
                 />
               )}
             </button>

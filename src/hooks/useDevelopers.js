@@ -16,10 +16,15 @@ export function useDevelopers() {
             const { data, error } = await supabase
                 .from('profiles')
                 .select(`
-                    *,
-                    mod_ideas(count),
-                    marketplace_items(count),
-                    followers:follows!follows_following_id_fkey(count),
+                    id, 
+                    username, 
+                    avatar_url, 
+                    bio, 
+                    reputation,
+                    is_verified,
+                    mod_ideas!mod_ideas_author_id_fkey(id),
+                    marketplace_items!marketplace_items_author_id_fkey(id),
+                    followers:follows!follows_following_id_fkey(follower_id),
                     is_following:follows!follows_following_id_fkey(follower_id)
                 `)
                 .order('reputation', { ascending: false });
@@ -28,10 +33,10 @@ export function useDevelopers() {
 
             const processedDevs = data.map(dev => ({
                 ...dev,
-                ideas_count: dev.mod_ideas?.[0]?.count || 0,
-                mods_count: dev.marketplace_items?.[0]?.count || 0,
-                followers_count: dev.followers?.[0]?.count || 0,
-                am_following: dev.is_following?.some(f => f.follower_id === user?.id)
+                ideas_count: dev.mod_ideas?.length || 0,
+                mods_count: dev.marketplace_items?.length || 0,
+                followers_count: dev.followers?.length || 0,
+                am_following: user && dev.is_following?.some(f => f.follower_id === user.id)
             }));
 
             setDevelopers(processedDevs);
