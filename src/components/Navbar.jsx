@@ -3,12 +3,10 @@ import { Link } from 'react-router-dom';
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '../lib/supabase';
-import AuthModal from './AuthModal';
 
-export default function Navbar({ onPostClick, searchQuery, onSearchChange }) {
+export default function Navbar({ onPostClick, onAuthClick, searchQuery, onSearchChange }) {
     const [isProfileOpen, setIsProfileOpen] = useState(false);
     const [user, setUser] = useState(null);
-    const [isAuthOpen, setIsAuthOpen] = useState(false);
     const profileRef = useRef(null);
 
     useEffect(() => {
@@ -120,7 +118,7 @@ export default function Navbar({ onPostClick, searchQuery, onSearchChange }) {
 
                         {!user && (
                             <button
-                                onClick={() => setIsAuthOpen(true)}
+                                onClick={onAuthClick}
                                 className="bg-slate-800 text-slate-100 px-4 py-2 rounded-xl font-black text-[10px] uppercase tracking-widest hover:bg-slate-700 transition-all border-none cursor-pointer"
                             >
                                 Sign In
@@ -171,7 +169,6 @@ export default function Navbar({ onPostClick, searchQuery, onSearchChange }) {
                     </div>
                 </div>
             </div>
-            <AuthModal isOpen={isAuthOpen} onClose={() => setIsAuthOpen(false)} />
         </header>
     );
 }

@@ -5,6 +5,7 @@ import CustomDropdown from './components/CustomDropdown';
 import { useIdeas } from './hooks/useIdeas';
 import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
+import AuthModal from './components/AuthModal';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import IdeaDetailView from './pages/IdeaDetailView';
@@ -116,6 +117,7 @@ export default function App() {
   } = useIdeas();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -126,6 +128,7 @@ export default function App() {
     <div className="min-h-screen">
       <Navbar
         onPostClick={() => setIsModalOpen(true)}
+        onAuthClick={() => setIsAuthOpen(true)}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
       />
@@ -192,6 +195,11 @@ export default function App() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onRefresh={refreshIdeas}
+      />
+
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
       />
     </div>
   );
