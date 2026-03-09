@@ -1,7 +1,7 @@
 import { Search, PlusCircle, Bell } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export default function Navbar({ onPostClick }) {
+export default function Navbar({ onPostClick, searchQuery, onSearchChange }) {
     return (
         <header className="fixed top-0 w-full z-50 glass-nav">
             <div className="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
@@ -28,6 +28,8 @@ export default function Navbar({ onPostClick }) {
                         <input
                             type="text"
                             placeholder="Search mods, plugins, or creators..."
+                            value={searchQuery}
+                            onChange={(e) => onSearchChange(e.target.value)}
                             className="w-full bg-neutral-dark/50 border border-slate-800 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary focus:border-primary transition-all outline-none text-slate-100"
                         />
                     </div>

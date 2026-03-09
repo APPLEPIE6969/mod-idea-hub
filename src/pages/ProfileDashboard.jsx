@@ -1,71 +1,160 @@
-import { Map, Zap, Award, Edit3, Settings, ExternalLink } from 'lucide-react';
+import { Settings, Plus, LayoutGrid, List, MessageSquare, Heart, Trophy, Globe, Github, Twitter, ExternalLink } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { supabase } from '../lib/supabase';
 import Layout from '../components/Layout';
+import IdeaCard from '../components/IdeaCard';
 
 export default function ProfileDashboard() {
-    const user = {
-        username: 'LunarDev',
-        displayName: 'Aiden Mitchell',
-        bio: 'Core Maintainer @PaperMC. Building high-performance Minecraft infrastructure and essential server utilities.',
-        joined: 'March 2024',
-        stats: { ideas: 42, solved: 15, impact: '1.2M' },
-        avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDOpSc6dH_ukL5_UDEZwLrLLluyX40w_A4kcCur4QDtQg1HYMnyWfeZXhm1fqCgVZY2PWkwVaDOqUh5HXhtMh1xWM9UPKvj50eJxLBVer4i3vzNvk5Zs2Sgk5Cni82h2lX0xTZJ8hUu-kWqDDPtI648ixWNQWmyZuVwdp1ru1eNmr6Pb59x12CKL7l7W9L0hNzYaBuyvmEFVbew-X9_Jfn9azkVMxIimSDE5Whu215e8FDc66siopC93tK0UMdLtoB5OtbO863h0s'
-    };
+    const [user, setUser] = useState(null);
+    const [ideas, setIdeas] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchProfileData = async () => {
+            try {
+                setLoading(true);
+                const { data: { user: authUser } } = await supabase.auth.getUser();
+                if (!authUser) {
+                    setLoading(false);
+                    return;
+                }
+
+                // Fetch Profile
+                const { data: profile } = await supabase
+                    .from('profiles')
+                    .select('*')
+                    .eq('id', authUser.id)
+                    .single();
+
+                // Fetch User's Ideas
+                const { data: userIdeas } = await supabase
+                    .from('mod_ideas')
+                    .select(`
+                        *,
+                        author:profiles(username, avatar_url),
+                        reactions(reaction_type, user_id)
+                    `)
+                    .eq('author_id', authUser.id)
+                    .order('created_at', { ascending: false });
+
+                setUser(profile || { username: authUser.email.split('@')[0] });
+                setIdeas(userIdeas?.map(idea => ({
+                    ...idea,
+                    author: idea.author?.username || 'Anonymous',
+                    upvotes: (idea.reactions || []).reduce((acc, curr) => acc + curr.reaction_type, 0)
+                })) || []);
+            } catch (err) {
+                console.error('Error fetching profile:', err.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchProfileData();
+    }, []);
+
+    if (loading) return (
+        <Layout>
+            <div className="text-center py-20 text-slate-500 italic">Preparing your dashboard...</div>
+        </Layout>
+    );
+
+    if (!user) return (
+        <Layout>
+            <div className="text-center py-20 text-slate-500">
+                <p className="mb-4 italic">Please sign in to view your profile dashboard.</p>
+                <button className="bg-primary text-background-dark px-6 py-2 rounded-lg font-bold">Sign In</button>
+            </div>
+        </Layout>
+    );
 
     return (
         <Layout>
-            <div className="flex flex-col gap-8">
-                <header className="bg-neutral-dark border border-slate-800 rounded-[2.5rem] p-10 flex flex-col md:flex-row items-center gap-10">
-                    <div className="relative group">
-                        <div className="absolute -inset-1 bg-gradient-to-tr from-primary to-accent-green rounded-full blur opacity-25 group-hover:opacity-50 transition duration-1000"></div>
-                        <img src={user.avatar} className="relative w-40 h-40 rounded-full border-4 border-background-dark object-cover" />
-                        <button className="absolute bottom-2 right-2 bg-primary p-2 rounded-full text-background-dark shadow-lg hover:scale-110 transition-transform bg-transparent border-none cursor-pointer">
-                            <Edit3 size={18} strokeWidth={3} />
-                        </button>
-                    </div>
-                    <div className="flex-1 text-center md:text-left">
-                        <div className="flex flex-col md:flex-row md:items-center gap-4 mb-4">
-                            <h1 className="text-4xl font-black text-slate-100 italic">{user.displayName}</h1>
-                            <span className="px-3 py-1 bg-primary/10 text-primary rounded-full text-[10px] font-black uppercase tracking-widest border border-primary/20 w-fit mx-auto md:mx-0">Verified Developer</span>
-                        </div>
-                        <p className="text-slate-400 text-lg leading-relaxed max-w-2xl mb-6">{user.bio}</p>
-                        <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-                            <button className="bg-primary text-background-dark px-6 py-3 rounded-2xl font-black text-sm hover:opacity-90 active:scale-95 transition-all bg-transparent border-none cursor-pointer">EDIT PROFILE</button>
-                            <button className="bg-neutral-dark border border-slate-800 text-slate-300 px-6 py-3 rounded-2xl font-black text-sm hover:bg-slate-800 transition-all bg-transparent cursor-pointer">SHARE PROFILE</button>
-                        </div>
-                    </div>
-                </header>
+            <div className="max-w-5xl mx-auto flex flex-col gap-8">
+                {/* Profile Header */}
+                <div className="relative bg-linear-to-tr from-primary/20 via-neutral-dark to-background-dark border border-slate-800 rounded-3xl p-8 overflow-hidden shadow-2xl">
+                    <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 blur-3xl -mr-20 -mt-20"></div>
 
-                <section className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-                    <div className="bg-neutral-dark border border-slate-800 p-8 rounded-[2rem]">
-                        <Map size={32} className="text-primary mx-auto mb-4" />
-                        <div className="text-3xl font-black text-slate-100">{user.stats.ideas}</div>
-                        <div className="text-[10px] uppercase font-black tracking-widest text-slate-500 mt-2">Ideas Proposed</div>
-                    </div>
-                    <div className="bg-neutral-dark border border-slate-800 p-8 rounded-[2rem]">
-                        <Zap size={32} className="text-accent-green mx-auto mb-4" />
-                        <div className="text-3xl font-black text-slate-100">{user.stats.solved}</div>
-                        <div className="text-[10px] uppercase font-black tracking-widest text-slate-500 mt-2">Concepts Claimed</div>
-                    </div>
-                    <div className="bg-neutral-dark border border-slate-800 p-8 rounded-[2rem]">
-                        <Award size={32} className="text-primary mx-auto mb-4" />
-                        <div className="text-3xl font-black text-slate-100">{user.stats.impact}</div>
-                        <div className="text-[10px] uppercase font-black tracking-widest text-slate-500 mt-2">Community Impact</div>
-                    </div>
-                </section>
-
-                <section className="flex flex-col gap-6">
-                    <div className="flex items-center justify-between px-4">
-                        <h2 className="text-xl font-black text-slate-100 uppercase tracking-tighter">Your Active Ideas</h2>
-                        <a href="#" className="text-xs font-bold text-primary hover:underline">View All</a>
-                    </div>
-                    <div className="bg-neutral-dark border border-slate-800 border-dashed py-20 rounded-[2.5rem] flex flex-col items-center justify-center text-center px-10">
-                        <div className="w-16 h-16 bg-slate-800/50 rounded-2xl flex items-center justify-center mb-6">
-                            <ExternalLink size={24} className="text-slate-600" />
+                    <div className="flex flex-col md:flex-row items-center md:items-end gap-6 relative z-10">
+                        <div className="relative group">
+                            <img
+                                src={user.avatar_url || "https://api.dicebear.com/7.x/pixel-art/svg?seed=" + user.username}
+                                alt={user.username}
+                                className="w-32 h-32 rounded-4xl border-4 border-background-dark shadow-2xl group-hover:scale-105 transition-transform bg-slate-800"
+                            />
+                            <button className="absolute bottom-1 right-1 bg-primary text-background-dark p-2 rounded-2xl shadow-lg border-2 border-background-dark hover:scale-110 transition-transform cursor-pointer">
+                                <Settings size={16} />
+                            </button>
                         </div>
-                        <p className="text-slate-500 max-w-sm mb-6">You haven't posted any public ideas yet. Start sharing to build your reputation!</p>
-                        <button className="bg-primary/20 text-primary border border-primary/40 px-8 py-3 rounded-2xl font-black text-xs hover:bg-primary/30 transition-all bg-transparent cursor-pointer">CREATE NEW IDEA</button>
+
+                        <div className="flex-1 flex flex-col gap-2 text-center md:text-left">
+                            <h1 className="text-4xl font-black text-slate-100 tracking-tight uppercase italic">{user.username}</h1>
+                            <p className="text-slate-400 max-w-xl font-medium leading-relaxed">
+                                {user.bio || "Crafting the future of Minecraft mods. Addicted to procedural generation and performance optimization."}
+                            </p>
+                            <div className="flex items-center justify-center md:justify-start gap-4 mt-2">
+                                <div className="flex items-center gap-2 text-slate-500 hover:text-primary transition-colors cursor-pointer">
+                                    <Github size={16} />
+                                    <span className="text-xs font-bold uppercase tracking-widest">Github</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-slate-500 hover:text-blue-400 transition-colors cursor-pointer">
+                                    <Twitter size={16} />
+                                    <span className="text-xs font-bold uppercase tracking-widest">Twitter</span>
+                                </div>
+                                <div className="flex items-center gap-2 text-slate-500 hover:text-slate-200 transition-colors cursor-pointer">
+                                    <ExternalLink size={16} />
+                                    <span className="text-xs font-bold uppercase tracking-widest">Website</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="hidden lg:grid grid-cols-2 gap-3 pb-2">
+                            <div className="bg-background-dark/50 border border-slate-800 rounded-2xl p-4 flex flex-col items-center min-w-[100px] shadow-lg">
+                                <span className="text-2xl font-black text-primary italic">24</span>
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Total Ideas</span>
+                            </div>
+                            <div className="bg-background-dark/50 border border-slate-800 rounded-2xl p-4 flex flex-col items-center min-w-[100px] shadow-lg">
+                                <span className="text-2xl font-black text-accent-green italic">1.2k</span>
+                                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">Upvotes</span>
+                            </div>
+                        </div>
                     </div>
-                </section>
+                </div>
+
+                {/* Dashboard Tabs & Actions */}
+                <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <div className="flex items-center gap-8">
+                        <button className="text-primary font-black text-sm uppercase tracking-widest border-b-2 border-primary pb-4 bg-transparent border-none cursor-pointer">My Submissions</button>
+                        <button className="text-slate-500 font-bold text-sm uppercase tracking-widest pb-4 hover:text-slate-300 transition-all bg-transparent border-none cursor-pointer">Saved Ideas</button>
+                        <button className="text-slate-500 font-bold text-sm uppercase tracking-widest pb-4 hover:text-slate-300 transition-all bg-transparent border-none cursor-pointer">Activity Feed</button>
+                    </div>
+                    <div className="flex items-center gap-4">
+                        <div className="flex bg-neutral-dark rounded-lg p-1 border border-slate-800">
+                            <button className="p-1.5 bg-slate-800 rounded-md text-primary bg-transparent border-none cursor-pointer"><LayoutGrid size={16} /></button>
+                            <button className="p-1.5 text-slate-500 bg-transparent border-none cursor-pointer"><List size={16} /></button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Profile Feed */}
+                <div className="grid grid-cols-1 gap-4">
+                    {ideas.length > 0 ? (
+                        ideas.map(idea => (
+                            <IdeaCard key={idea.id} idea={idea} onVote={() => { }} />
+                        ))
+                    ) : (
+                        <div className="py-20 text-center bg-neutral-dark rounded-3xl border border-slate-800 border-dashed">
+                            <div className="w-16 h-16 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4 border border-slate-700">
+                                <Plus size={32} className="text-slate-500" />
+                            </div>
+                            <h3 className="text-slate-300 font-bold mb-2 uppercase tracking-tight">No ideas posted yet</h3>
+                            <p className="text-slate-500 text-sm mb-6">Start by sharing your first brilliant mod or plugin idea.</p>
+                            <button className="bg-primary text-background-dark px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform">
+                                SUBMIT NEW IDEA
+                            </button>
+                        </div>
+                    )}
+                </div>
             </div>
         </Layout>
     );

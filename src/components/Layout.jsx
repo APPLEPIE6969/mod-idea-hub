@@ -1,100 +1,102 @@
-import { Box, Puzzle, Wrench, Paintbrush, Trophy, Layout as LayoutIcon } from 'lucide-react';
+import { Box, Puzzle, Wrench, Paintbrush, Trophy, Layout as LayoutIcon, ChevronRight } from 'lucide-react';
 
-const SidebarItem = ({ icon: Icon, label, active = false }) => (
-    <a href="#" className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${active ? 'bg-primary/10 text-primary border border-primary/20' : 'text-slate-400 hover:bg-neutral-dark'
-        }`}>
-        <Icon size={20} />
-        <span className={`text-sm ${active ? 'font-semibold' : 'font-medium'}`}>{label}</span>
-    </a>
+const SidebarItem = ({ icon: Icon, label, active = false, onClick }) => (
+    <button
+        onClick={onClick}
+        className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all border-none cursor-pointer text-left group ${active ? 'bg-primary/10 text-primary border border-primary/20 shadow-[0_0_15px_rgba(13,242,242,0.1)]' : 'text-slate-400 hover:bg-neutral-dark bg-transparent'
+            }`}
+    >
+        <div className="flex items-center gap-3">
+            <Icon size={18} className={active ? 'text-primary' : 'text-slate-500 group-hover:text-slate-300'} />
+            <span className="text-sm font-medium">{label}</span>
+        </div>
+        {active && <ChevronRight size={14} className="text-primary/50" />}
+    </button>
 );
 
-export default function Layout({ children }) {
+export default function Layout({ children, activeCategory = 'All', onCategoryChange }) {
+    const categories = [
+        { id: 'All', label: 'All Categories', icon: LayoutIcon },
+        { id: 'Minecraft', label: 'Minecraft Mods', icon: Box },
+        { id: 'Plugins', label: 'Server Plugins', icon: Puzzle },
+        { id: 'Tools', label: 'Developer Tools', icon: Wrench },
+        { id: 'Assets', label: 'Asset Packs', icon: Paintbrush },
+    ];
+
     return (
-        <div className="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
-            <main className="max-w-[1440px] mx-auto pt-24 px-6 grid grid-cols-12 gap-8">
-                {/* Left Sidebar */}
-                <aside className="col-span-3 hidden lg:flex flex-col gap-8 sticky top-24 h-fit">
+        <div className="bg-background-dark min-h-screen pt-16">
+            <div className="max-w-[1440px] mx-auto px-6 grid grid-cols-1 lg:grid-cols-[240px_1fr_300px] gap-8">
+                {/* Left Sidebar - Navigation */}
+                <aside className="hidden lg:flex flex-col gap-8 py-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar">
                     <section className="flex flex-col gap-2">
-                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest px-2">Categories</h3>
+                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest px-2 mb-2">Categories</h3>
                         <div className="flex flex-col gap-1">
-                            <SidebarItem icon={Box} label="Minecraft Mods" active />
-                            <SidebarItem icon={Puzzle} label="Server Plugins" />
-                            <SidebarItem icon={Wrench} label="Developer Tools" />
-                            <SidebarItem icon={Paintbrush} label="Asset Packs" />
+                            {categories.map(cat => (
+                                <SidebarItem
+                                    key={cat.id}
+                                    icon={cat.icon}
+                                    label={cat.label}
+                                    active={activeCategory === cat.id}
+                                    onClick={() => onCategoryChange(cat.id)}
+                                />
+                            ))}
                         </div>
+                    </section>
+
+                    {/* Community Stats Card Component - Premium Look */}
+                    <section className="bg-linear-to-br from-neutral-dark/80 to-background-dark border border-slate-800 rounded-xl p-4 flex flex-col gap-4 shadow-xl">
+                        <div className="flex items-center gap-2 text-primary">
+                            <Trophy size={18} />
+                            <span className="text-sm font-bold uppercase tracking-tight">Leaderboard</span>
+                        </div>
+                        <div className="flex flex-col gap-3">
+                            {[1, 2, 3].map(i => (
+                                <div key={i} className="flex items-center justify-between group cursor-pointer p-1 hover:bg-white/5 rounded transition-colors">
+                                    <div className="flex items-center gap-2">
+                                        <div className={`w-6 h-6 rounded flex items-center justify-center text-[10px] font-bold ${i === 1 ? 'bg-primary/20 text-primary border border-primary/30' : 'bg-slate-800 text-slate-500'
+                                            }`}>
+                                            {i}
+                                        </div>
+                                        <div className="text-xs font-medium text-slate-300 group-hover:text-primary transition-colors">Creator_{i}</div>
+                                    </div>
+                                    <div className="text-[10px] font-bold text-slate-500 group-hover:text-slate-300">1.2k</div>
+                                </div>
+                            ))}
+                        </div>
+                        <button className="mt-2 text-[10px] font-bold text-primary/60 hover:text-primary transition-colors bg-transparent border-none cursor-pointer uppercase tracking-widest">
+                            View all ranks
+                        </button>
+                    </section>
+                </aside>
+
+                {/* Main Content */}
+                <main className="py-6 min-h-[calc(100vh-64px)]">
+                    {children}
+                </main>
+
+                {/* Right Sidebar - Social & Community */}
+                <aside className="hidden lg:flex flex-col gap-8 py-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar">
+                    <section className="bg-primary/5 border border-primary/20 rounded-xl p-5 flex flex-col gap-3 relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-primary/10 blur-3xl -mr-12 -mt-12 group-hover:bg-primary/20 transition-all"></div>
+                        <h3 className="text-slate-100 font-bold text-sm z-10">Join our Discord</h3>
+                        <p className="text-slate-400 text-xs leading-relaxed z-10">Connect with 2,400+ creators and get help with your mod ideas!</p>
+                        <button className="w-full bg-primary text-background-dark py-2 rounded-lg font-bold text-xs hover:opacity-90 transition-all border-none cursor-pointer mt-2 z-10 shadow-lg shadow-primary/20">
+                            JOIN COMMUNITY
+                        </button>
                     </section>
 
                     <section className="flex flex-col gap-4">
                         <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest px-2">Trending Tags</h3>
                         <div className="flex flex-wrap gap-2 px-2">
-                            {['Optimization', 'Shaders', 'PaperMC', 'Forge', 'Fabric'].map(tag => (
-                                <span key={tag} className="px-2 py-1 rounded bg-neutral-dark border border-slate-800 text-xs text-slate-300 hover:border-primary/40 cursor-pointer transition-colors">
+                            {['Optimization', 'Visuals', 'New Mobs', 'RPG', 'Biomes', 'Industrial'].map(tag => (
+                                <a key={tag} href="#" className="px-3 py-1.5 bg-neutral-dark border border-slate-800 rounded-full text-[10px] font-semibold text-slate-400 hover:text-primary hover:border-primary/30 transition-all no-underline">
                                     #{tag}
-                                </span>
-                            ))}
-                        </div>
-                    </section>
-
-                    <section className="bg-neutral-dark/40 border border-slate-800/50 rounded-xl p-4">
-                        <div className="flex items-center gap-2 mb-4">
-                            <Trophy size={20} className="text-primary" />
-                            <h3 className="text-sm font-bold text-slate-200 uppercase tracking-tight">Top Ideators</h3>
-                        </div>
-                        <div className="flex flex-col gap-4">
-                            {[
-                                { name: 'AlexCraft', pts: '1,240', avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBb3Q0kDDsw--Dz_wflUHGlcr-R0fnTamTB6q-SXR8Oj3IRqGGMoXgrWBf9OaQ3pnt3nrwr6qA71nIHSIoR22_78HW_HjwL5mGrrarMGLJdRdgikfoIxSSNM2Ek6kNSI4elo4pBHcLd6wZQJBWryQ_Qo9DimtechHadDJ5I9Bf7LcITWQUPkLv_P6C4zKWSJnBlAEwY2DZmyvHNKOmplmRBZ0r9NPHSFkSHKThIWxUbHzO8ATtPRQm71OXNC7gRmbAWjzAnnObm9Nc' },
-                                { name: 'PixelMaster', pts: '980', avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCUsCNlgLC-x1bUoGigloLUTHeon5v2w6eTwOf4MfrxwLD75kqdOnGuMQBqCqpQ3sXSFofnCJ_6rkXk2Ljmmv3ft9qTj1jhTLtMLJc4khGz-reQKzAX-SexaF7eZHpteU5R3r6_OCOMrBNHe2Vl3_waFEq2MNPnFwKpUDMMZzV0uPsiu2RLdSK_C9J8t6JA6ptMY1jdkCzzl30rBWz2HY2MeRwa_zFp0P5EFndAhpHjov4XUFaKJ4QZmSGVkrDF67HXRZFsi7n8tBQ' },
-                                { name: 'NovaDev', pts: '850', avatar: 'https://lh3.googleusercontent.com/aida-public/AB6AXuD1AaUZqcribDMmY0Bc8WAuOQdLEZhzgIEqbz-yh8MJOnRIL9Mo_0SeoDdYYi7ihss5q0N8zuvLpMgmQsVcqZMOdveDAEyzwGPvaXhHOtM56fHxKULtWcYDMZeitdtKn-ynrWmJgHesO5Xxlz3Ib-C__V12-3L_b3uvwjP-vK4YG08lGDUBm4jxb-ryUL64RV1yHxgVDTV1C2AZ2Wzv8I-mWycee0PmlYl00K-XXnSAYRgUOKLK9TpCznqCpbezN48y_n9NrtLq_b4' }
-                            ].map(user => (
-                                <div key={user.name} className="flex items-center justify-between">
-                                    <div className="flex items-center gap-3">
-                                        <img src={user.avatar} alt={user.name} className="w-8 h-8 rounded-full border border-slate-700" />
-                                        <span className="text-xs font-medium">@{user.name}</span>
-                                    </div>
-                                    <span className="text-[10px] text-primary font-bold">{user.pts} pts</span>
-                                </div>
+                                </a>
                             ))}
                         </div>
                     </section>
                 </aside>
-
-                {/* Main Feed */}
-                <div className="col-span-12 lg:col-span-6 flex flex-col gap-6">
-                    {children}
-                </div>
-
-                {/* Right Sidebar */}
-                <aside className="col-span-3 hidden xl:flex flex-col gap-6 sticky top-24 h-fit">
-                    <div className="bg-gradient-to-br from-primary/20 to-transparent border border-primary/20 rounded-xl p-5">
-                        <h3 className="text-slate-100 font-bold mb-2">New Feature!</h3>
-                        <p className="text-xs text-slate-400 mb-4">You can now directly fund mod concepts using our integrated developer bounties system.</p>
-                        <button className="w-full bg-primary/20 text-primary border border-primary/40 py-2 rounded font-bold text-xs hover:bg-primary/30 transition-all outline-none">Learn More</button>
-                    </div>
-
-                    <section className="flex flex-col gap-4">
-                        <h3 className="text-xs font-bold text-slate-500 uppercase tracking-widest px-2">Community Stats</h3>
-                        <div className="grid grid-cols-2 gap-3">
-                            <div className="bg-neutral-dark border border-slate-800 p-3 rounded-lg">
-                                <div className="text-primary text-lg font-black">4.2k</div>
-                                <div className="text-[10px] text-slate-500 uppercase font-bold">Ideas Posted</div>
-                            </div>
-                            <div className="bg-neutral-dark border border-slate-800 p-3 rounded-lg">
-                                <div className="text-accent-green text-lg font-black">156</div>
-                                <div className="text-[10px] text-slate-500 uppercase font-bold">Mods Shipped</div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <footer className="mt-8 px-2">
-                        <div className="flex flex-wrap gap-x-4 gap-y-2 mb-4">
-                            {['About', 'Privacy', 'Terms', 'API'].map(link => (
-                                <a key={link} href="#" className="text-[10px] text-slate-600 hover:text-slate-400 transition-colors">{link}</a>
-                            ))}
-                        </div>
-                        <p className="text-[10px] text-slate-700">© 2024 ModHub Premium Creators. All rights reserved.</p>
-                    </footer>
-                </aside>
-            </main>
+            </div>
         </div>
     );
 }

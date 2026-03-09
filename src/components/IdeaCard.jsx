@@ -1,19 +1,32 @@
 import { ChevronUp, ChevronDown, MessageSquare, Share2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-export default function IdeaCard({ idea }) {
+export default function IdeaCard({ idea, onVote }) {
     const { id, title, description, author, category, status, upvotes = 0, comments = 0 } = idea;
 
     const voteDisplay = upvotes >= 1000 ? (upvotes / 1000).toFixed(1) + 'k' : upvotes;
 
+    const handleShare = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navigator.clipboard.writeText(`${window.location.origin}/idea/${id}`);
+        alert('Link copied to clipboard!');
+    };
+
     return (
         <article className="idea-card bg-neutral-dark border border-slate-800 rounded-xl p-5 flex gap-6 transition-all group hover:border-primary/30">
             <div className="flex flex-col items-center gap-1 min-w-[40px]">
-                <button className="text-slate-500 hover:text-primary transition-colors bg-transparent border-none p-0 cursor-pointer outline-none">
+                <button
+                    onClick={() => onVote(id, 1)}
+                    className="text-slate-500 hover:text-primary transition-colors bg-transparent border-none p-0 cursor-pointer outline-none"
+                >
                     <ChevronUp size={32} />
                 </button>
                 <span className="font-bold text-slate-200">{voteDisplay}</span>
-                <button className="text-slate-500 hover:text-red-500 transition-colors bg-transparent border-none p-0 cursor-pointer outline-none">
+                <button
+                    onClick={() => onVote(id, -1)}
+                    className="text-slate-500 hover:text-red-500 transition-colors bg-transparent border-none p-0 cursor-pointer outline-none"
+                >
                     <ChevronDown size={32} />
                 </button>
             </div>
@@ -34,10 +47,13 @@ export default function IdeaCard({ idea }) {
                             <MessageSquare size={18} />
                             <span className="text-xs font-semibold">{comments} Comments</span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-slate-500 hover:text-slate-300 transition-colors">
+                        <button
+                            onClick={handleShare}
+                            className="flex items-center gap-1.5 text-slate-500 hover:text-slate-300 transition-colors bg-transparent border-none p-0 cursor-pointer"
+                        >
                             <Share2 size={18} />
                             <span className="text-xs font-semibold">Share</span>
-                        </div>
+                        </button>
                     </div>
                 </div>
             </Link>

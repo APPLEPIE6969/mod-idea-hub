@@ -40,7 +40,7 @@ function IdeaFeed({ ideas, loading, error, setIsModalOpen }) {
           ))
         ) : ideas.length > 0 ? (
           ideas.map(idea => (
-            <IdeaCard key={idea.id} idea={idea} />
+            <IdeaCard key={idea.id} idea={idea} onVote={onVote} />
           ))
         ) : (
           <div className="bg-neutral-dark border border-slate-800 border-dashed p-12 text-center rounded-xl">
@@ -59,21 +59,39 @@ function IdeaFeed({ ideas, loading, error, setIsModalOpen }) {
 }
 
 export default function App() {
-  const { ideas, loading, error, refreshIdeas } = useIdeas();
+  const {
+    ideas,
+    loading,
+    error,
+    refreshIdeas,
+    voteIdea,
+    searchQuery,
+    setSearchQuery,
+    categoryFilter,
+    setCategoryFilter
+  } = useIdeas();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="min-h-screen">
-      <Navbar onPostClick={() => setIsModalOpen(true)} />
+      <Navbar
+        onPostClick={() => setIsModalOpen(true)}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+      />
 
       <Routes>
         <Route path="/" element={
-          <Layout>
+          <Layout
+            activeCategory={categoryFilter}
+            onCategoryChange={setCategoryFilter}
+          >
             <IdeaFeed
               ideas={ideas}
               loading={loading}
               error={error}
               setIsModalOpen={setIsModalOpen}
+              onVote={voteIdea}
             />
           </Layout>
         } />
