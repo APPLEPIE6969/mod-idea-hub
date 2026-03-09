@@ -82,9 +82,9 @@ export default function ProfileDashboard() {
                                 alt={user.username}
                                 className="w-32 h-32 rounded-4xl border-4 border-background-dark shadow-2xl group-hover:scale-105 transition-transform bg-slate-800"
                             />
-                            <button className="absolute bottom-1 right-1 bg-primary text-background-dark p-2 rounded-2xl shadow-lg border-2 border-background-dark hover:scale-110 transition-transform cursor-pointer">
+                            <Link to="/settings" className="absolute bottom-1 right-1 bg-primary text-background-dark p-2 rounded-2xl shadow-lg border-2 border-background-dark hover:scale-110 transition-transform cursor-pointer">
                                 <Settings size={16} />
-                            </button>
+                            </Link>
                         </div>
 
                         <div className="flex-1 flex flex-col gap-2 text-center md:text-left">

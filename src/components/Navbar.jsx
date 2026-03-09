@@ -69,8 +69,8 @@ export default function Navbar({ onPostClick, searchQuery, onSearchChange }) {
                     </Link>
                     <nav className="hidden lg:flex items-center gap-6">
                         <Link to="/" className="text-xs font-bold uppercase tracking-widest text-primary border-b-2 border-primary pb-1 no-underline">Explore</Link>
-                        <a href="#" className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors no-underline">Marketplace</a>
-                        <a href="#" className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors no-underline">Devs</a>
+                        <Link to="/marketplace" className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors no-underline">Marketplace</Link>
+                        <Link to="/devs" className="text-xs font-bold uppercase tracking-widest text-slate-500 hover:text-slate-100 transition-colors no-underline">Devs</Link>
                     </nav>
                 </div>
 
@@ -135,14 +135,14 @@ export default function Navbar({ onPostClick, searchQuery, onSearchChange }) {
                                             <User size={16} />
                                             <span className="text-xs font-bold uppercase tracking-widest">My Profile</span>
                                         </Link>
-                                        <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-all no-underline bg-transparent border-none cursor-pointer w-full text-left">
+                                        <Link to="/dashboard" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-all no-underline w-full text-left">
                                             <LayoutDashboard size={16} />
                                             <span className="text-xs font-bold uppercase tracking-widest">Dashboard</span>
-                                        </button>
-                                        <button className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-all no-underline bg-transparent border-none cursor-pointer w-full text-left">
+                                        </Link>
+                                        <Link to="/settings" onClick={() => setIsProfileOpen(false)} className="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-white/5 transition-all no-underline w-full text-left">
                                             <Settings size={16} />
                                             <span className="text-xs font-bold uppercase tracking-widest">Settings</span>
-                                        </button>
+                                        </Link>
                                     </div>
 
                                     <div className="mt-2 pt-2 border-t border-white/5">

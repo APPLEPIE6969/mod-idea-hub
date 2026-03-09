@@ -9,6 +9,11 @@ import { Routes, Route, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import IdeaDetailView from './pages/IdeaDetailView';
 import ProfileDashboard from './pages/ProfileDashboard';
+import Marketplace from './pages/Marketplace';
+import Developers from './pages/Developers';
+import Leaderboard from './pages/Leaderboard';
+import Settings from './pages/Settings';
+import Dashboard from './pages/Dashboard';
 
 const PageWrapper = ({ children }) => (
   <motion.div
@@ -153,6 +158,31 @@ export default function App() {
           <Route path="/profile" element={
             <PageWrapper>
               <ProfileDashboard />
+            </PageWrapper>
+          } />
+          <Route path="/marketplace" element={
+            <PageWrapper>
+              <Marketplace />
+            </PageWrapper>
+          } />
+          <Route path="/devs" element={
+            <PageWrapper>
+              <Developers />
+            </PageWrapper>
+          } />
+          <Route path="/leaderboard" element={
+            <PageWrapper>
+              <Leaderboard />
+            </PageWrapper>
+          } />
+          <Route path="/settings" element={
+            <PageWrapper>
+              <Settings />
+            </PageWrapper>
+          } />
+          <Route path="/dashboard" element={
+            <PageWrapper>
+              <Dashboard />
             </PageWrapper>
           } />
         </Routes>

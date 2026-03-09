@@ -1,5 +1,6 @@
 import { Box, Puzzle, Wrench, Paintbrush, Trophy, Layout as LayoutIcon, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const SidebarItem = ({ icon: Icon, label, active = false, onClick }) => (
     <motion.button
@@ -66,9 +67,9 @@ export default function Layout({ children, activeCategory = 'All', onCategoryCha
                                 </div>
                             ))}
                         </div>
-                        <button className="mt-2 text-[10px] font-bold text-primary/60 hover:text-primary transition-colors bg-transparent border-none cursor-pointer uppercase tracking-widest">
+                        <Link to="/leaderboard" className="mt-2 text-[10px] font-bold text-primary/60 hover:text-primary transition-colors no-underline uppercase tracking-widest">
                             View all ranks
-                        </button>
+                        </Link>
                     </section>
                 </aside>
 
