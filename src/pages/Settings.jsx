@@ -210,7 +210,17 @@ export default function Settings() {
                     </SettingsSection>
 
                     <SettingsSection title="Account Security">
-                        <button className="flex items-center gap-3 text-slate-400 hover:text-red-400 transition-colors bg-transparent border-none cursor-pointer w-fit font-bold uppercase text-[10px] tracking-widest">
+                        <button
+                            onClick={async () => {
+                                const { data: { user } } = await supabase.auth.getUser();
+                                if (user) {
+                                    const { error } = await supabase.auth.resetPasswordForEmail(user.email);
+                                    if (error) alert(error.message);
+                                    else alert('Password reset email sent!');
+                                }
+                            }}
+                            className="flex items-center gap-3 text-slate-400 hover:text-red-400 transition-colors bg-transparent border-none cursor-pointer w-fit font-bold uppercase text-[10px] tracking-widest"
+                        >
                             <Shield size={16} />
                             Reset Password
                         </button>

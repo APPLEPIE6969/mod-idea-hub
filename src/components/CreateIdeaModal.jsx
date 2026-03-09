@@ -78,7 +78,7 @@ export default function CreateIdeaModal({ isOpen, onClose, onRefresh }) {
                         initial={{ scale: 0.9, opacity: 0, y: 20 }}
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.95, opacity: 0, y: 10 }}
-                        transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                        transition={{ type: 'spring', damping: 30, stiffness: 200 }}
                         className="relative w-full max-w-2xl bg-neutral-dark border border-slate-800 rounded-3xl overflow-hidden shadow-2xl"
                     >
                         {/* Header Branding */}

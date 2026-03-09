@@ -1,12 +1,14 @@
-import { Package, Download, Star, CheckCircle2, ChevronRight, Search } from 'lucide-react';
+import { Package, Download, CheckCircle2, ChevronRight, Search, Loader2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Layout from '../components/Layout';
 import CustomDropdown from '../components/CustomDropdown';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { useMarketplace } from '../hooks/useMarketplace';
 
-const MarketCard = ({ title, author, downloads, category, isVerified, icon }) => (
+const MarketCard = ({ id, title, author, download_count, category, isVerified, onDownload }) => (
     <motion.div
-        whileHover={{ y: -5 }}
+        whileHover={{ y: -6, scale: 1.005 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         className="bg-neutral-dark border border-slate-800 rounded-2xl overflow-hidden shadow-xl group"
     >
         <div className="p-6 flex flex-col gap-4">
@@ -24,15 +26,18 @@ const MarketCard = ({ title, author, downloads, category, isVerified, icon }) =>
             <div className="flex flex-col gap-1">
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{category}</span>
                 <h3 className="text-lg font-bold text-slate-100 group-hover:text-primary transition-colors">{title}</h3>
-                <p className="text-xs text-slate-400 font-medium italic">by {author}</p>
+                <p className="text-xs text-slate-400 font-medium italic">by {author?.username || 'Anonymous'}</p>
             </div>
 
             <div className="flex items-center justify-between pt-4 border-t border-white/5">
                 <div className="flex items-center gap-2 text-slate-500">
                     <Download size={14} />
-                    <span className="text-xs font-bold">{downloads}</span>
+                    <span className="text-xs font-bold">{download_count?.toLocaleString() || 0}</span>
                 </div>
-                <button className="bg-primary/10 hover:bg-primary text-primary hover:text-background-dark p-2 rounded-lg transition-all border border-primary/20 cursor-pointer">
+                <button
+                    onClick={() => onDownload(id)}
+                    className="bg-primary/10 hover:bg-primary text-primary hover:text-background-dark p-2 rounded-lg transition-all border border-primary/20 cursor-pointer"
+                >
                     <ChevronRight size={16} />
                 </button>
             </div>
@@ -42,15 +47,8 @@ const MarketCard = ({ title, author, downloads, category, isVerified, icon }) =>
 
 export default function Marketplace() {
     const [filter, setFilter] = useState('All');
-
-    const mods = [
-        { title: 'Aetherial Dynamics', author: 'Caelum', downloads: '12.4k', category: 'Minecraft Mod', isVerified: true },
-        { title: 'Nexus Gates', author: 'VoidWalker', downloads: '8.2k', category: 'Plugin', isVerified: false },
-        { title: 'Chrono-Craft', author: 'TimeKeeper', downloads: '15.1k', category: 'Minecraft Mod', isVerified: true },
-        { title: 'Primal Spirits', author: 'NatureGuard', downloads: '4.5k', category: 'Data Pack', isVerified: false },
-        { title: 'Flux Generators', author: 'EnergyMage', downloads: '22.8k', category: 'Minecraft Mod', isVerified: true },
-        { title: 'Shadow Realm', author: 'Abyss', downloads: '6.7k', category: 'Plugin', isVerified: false },
-    ];
+    const [search, setSearch] = useState('');
+    const { items, loading, incrementDownload, refreshItems } = useMarketplace();
 
     const filterOptions = [
         { value: 'All', label: 'All Projects' },
@@ -58,6 +56,15 @@ export default function Marketplace() {
         { value: 'New', label: 'Newly Released' },
         { value: 'Editor', label: 'Editor Choice' }
     ];
+
+    const filteredItems = useMemo(() => {
+        return items.filter(item => {
+            const matchesSearch = item.title.toLowerCase().includes(search.toLowerCase());
+            if (filter === 'All') return matchesSearch;
+            if (filter === 'Verified') return matchesSearch && item.author?.is_verified; // Assuming is_verified flag
+            return matchesSearch;
+        });
+    }, [items, search, filter]);
 
     return (
         <Layout>
@@ -71,7 +78,10 @@ export default function Marketplace() {
                         <CustomDropdown
                             options={filterOptions}
                             value={filter}
-                            onChange={setFilter}
+                            onChange={(val) => {
+                                setFilter(val);
+                                refreshItems(val);
+                            }}
                             className="w-48"
                         />
                     </div>
@@ -82,15 +92,34 @@ export default function Marketplace() {
                     <input
                         type="text"
                         placeholder="Search the marketplace..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
                         className="w-full bg-neutral-dark border border-slate-800 rounded-2xl py-4 pl-12 pr-4 text-slate-100 focus:ring-1 focus:ring-primary outline-none transition-all shadow-2xl"
                     />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {mods.map((mod, i) => (
-                        <MarketCard key={i} {...mod} />
-                    ))}
-                </div>
+                {loading ? (
+                    <div className="flex flex-col items-center justify-center py-20 gap-4">
+                        <Loader2 size={48} className="animate-spin text-primary opacity-50" />
+                        <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Accessing Multiverse Data...</span>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {filteredItems.length > 0 ? (
+                            filteredItems.map((item) => (
+                                <MarketCard
+                                    key={item.id}
+                                    {...item}
+                                    onDownload={incrementDownload}
+                                />
+                            ))
+                        ) : (
+                            <div className="col-span-full text-center py-20 bg-neutral-dark/40 border border-dashed border-slate-800 rounded-3xl">
+                                <p className="text-slate-500 font-medium">No projects found matching your criteria.</p>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </Layout>
     );

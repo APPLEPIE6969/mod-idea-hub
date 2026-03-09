@@ -45,7 +45,7 @@ export default function CustomDropdown({ options, value, onChange, label, classN
                         initial={{ opacity: 0, y: 5, scale: 0.98 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 5, scale: 0.98 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
+                        transition={{ type: 'spring', damping: 25, stiffness: 250 }}
                         className="absolute top-full left-0 right-0 mt-2 z-200 bg-neutral-dark border border-slate-800 rounded-xl shadow-2xl overflow-hidden p-1.5"
                     >
                         <div className="flex flex-col gap-1 max-h-60 overflow-y-auto custom-scrollbar">

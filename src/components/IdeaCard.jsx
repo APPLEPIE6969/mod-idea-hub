@@ -19,8 +19,8 @@ export default function IdeaCard({ idea, onVote }) {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            whileHover={{ y: -4, scale: 1.01 }}
-            transition={{ type: 'spring', damping: 20, stiffness: 300 }}
+            whileHover={{ y: -4, scale: 1.005 }}
+            transition={{ type: 'spring', damping: 30, stiffness: 200 }}
             className="idea-card bg-neutral-dark border border-slate-800 rounded-xl p-5 flex gap-6 transition-all group hover:border-primary/40 hover:shadow-[0_8px_30px_rgb(13,242,242,0.05)]"
         >
             <div className="flex flex-col items-center gap-1 min-w-[40px]">
@@ -43,7 +43,7 @@ export default function IdeaCard({ idea, onVote }) {
             <Link to={`/idea/${id}`} className="flex-1 flex flex-col gap-2 no-underline cursor-pointer">
                 <div className="flex items-center gap-2 mb-1">
                     <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${status === 'Verified' ? 'bg-accent-green/20 text-accent-green' :
-                            status === 'In Progress' ? 'bg-primary/20 text-primary' : 'bg-slate-500/20 text-slate-400'
+                        status === 'In Progress' ? 'bg-primary/20 text-primary' : 'bg-slate-500/20 text-slate-400'
                         }`}>
                         {status || 'Draft'}
                     </span>

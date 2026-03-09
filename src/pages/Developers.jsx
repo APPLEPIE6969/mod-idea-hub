@@ -1,20 +1,22 @@
-import { User, Users, Star, MessageSquare, Plus, Search, Filter } from 'lucide-react';
+import { Star, Search, Filter, Loader2, UserPlus, UserMinus } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Layout from '../components/Layout';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
+import { useDevelopers } from '../hooks/useDevelopers';
 
-const DevCard = ({ username, bio, ideas, mods, avatar, isVerified }) => (
+const DevCard = ({ id, username, bio, ideas_count, mods_count, avatar_url, is_verified, am_following, onToggleFollow }) => (
     <motion.div
-        whileHover={{ x: 5 }}
+        whileHover={{ x: 8, scale: 1.005 }}
+        transition={{ type: 'spring', damping: 25, stiffness: 200 }}
         className="bg-neutral-dark border border-slate-800 rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6 shadow-xl transition-all hover:border-primary/20"
     >
         <div className="relative">
             <img
-                src={avatar || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${username}`}
+                src={avatar_url || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${username}`}
                 alt={username}
-                className="w-24 h-24 rounded-3xl border-4 border-background-dark shadow-2xl bg-slate-800"
+                className="w-24 h-24 rounded-3xl border-4 border-background-dark shadow-2xl bg-slate-800 object-cover"
             />
-            {isVerified && (
+            {is_verified && (
                 <div className="absolute -top-2 -right-2 bg-primary text-background-dark p-1 rounded-lg border-2 border-background-dark">
                     <Star size={14} fill="currentColor" />
                 </div>
@@ -31,30 +33,47 @@ const DevCard = ({ username, bio, ideas, mods, avatar, isVerified }) => (
             </p>
             <div className="flex items-center justify-center md:justify-start gap-6 mt-2">
                 <div className="flex flex-col">
-                    <span className="text-primary font-black text-lg leading-none">{ideas}</span>
+                    <span className="text-primary font-black text-lg leading-none">{ideas_count}</span>
                     <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Ideas</span>
                 </div>
                 <div className="flex flex-col">
-                    <span className="text-accent-green font-black text-lg leading-none">{mods}</span>
+                    <span className="text-accent-green font-black text-lg leading-none">{mods_count}</span>
                     <span className="text-[9px] font-bold text-slate-500 uppercase tracking-widest">Mods</span>
                 </div>
             </div>
         </div>
 
-        <button className="w-full md:w-auto bg-primary/10 hover:bg-primary text-primary hover:text-background-dark px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all border border-primary/20 cursor-pointer shadow-lg hover:shadow-primary/20">
-            FOLLOW
+        <button
+            onClick={() => onToggleFollow(id, am_following)}
+            className={`w-full md:w-auto px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all border cursor-pointer shadow-lg flex items-center justify-center gap-2 ${am_following
+                ? 'bg-slate-800 border-slate-700 text-slate-400 hover:bg-red-500/10 hover:border-red-500/20 hover:text-red-500 group'
+                : 'bg-primary/10 border-primary/20 text-primary hover:bg-primary hover:text-background-dark hover:shadow-primary/20'
+                }`}
+        >
+            {am_following ? (
+                <>
+                    <UserMinus size={16} />
+                    UNFOLLOW
+                </>
+            ) : (
+                <>
+                    <UserPlus size={16} />
+                    FOLLOW
+                </>
+            )}
         </button>
     </motion.div>
 );
 
 export default function Developers() {
-    const devs = [
-        { username: 'Caelum', ideas: 42, mods: 12, isVerified: true },
-        { username: 'VoidWalker', ideas: 28, mods: 5, isVerified: false },
-        { username: 'TimeKeeper', ideas: 56, mods: 18, isVerified: true },
-        { username: 'NatureGuard', ideas: 15, mods: 3, isVerified: false },
-        { username: 'EnergyMage', ideas: 89, mods: 24, isVerified: true },
-    ];
+    const [search, setSearch] = useState('');
+    const { developers, loading, toggleFollow } = useDevelopers();
+
+    const filteredDevs = useMemo(() => {
+        return developers.filter(dev =>
+            dev.username.toLowerCase().includes(search.toLowerCase())
+        );
+    }, [developers, search]);
 
     return (
         <Layout>
@@ -70,20 +89,35 @@ export default function Developers() {
                         <input
                             type="text"
                             placeholder="Find a developer..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
                             className="w-full bg-neutral-dark border border-slate-800 rounded-2xl py-4 pl-12 pr-4 text-slate-100 focus:ring-1 focus:ring-primary outline-none transition-all shadow-xl"
                         />
                     </div>
-                    <button className="bg-neutral-dark border border-slate-800 rounded-2xl px-6 py-4 text-slate-400 flex items-center gap-2 hover:border-slate-600 transition-all cursor-pointer">
-                        <Filter size={18} />
-                        <span className="font-bold uppercase text-xs tracking-widest">Filter</span>
-                    </button>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4">
-                    {devs.map((dev, i) => (
-                        <DevCard key={i} {...dev} />
-                    ))}
-                </div>
+                {loading ? (
+                    <div className="flex flex-col items-center justify-center py-20 gap-4">
+                        <Loader2 size={48} className="animate-spin text-primary" />
+                        <span className="text-xs font-bold text-slate-500 uppercase tracking-widest italic">Scanning Creators Network...</span>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 gap-4">
+                        {filteredDevs.length > 0 ? (
+                            filteredDevs.map((dev) => (
+                                <DevCard
+                                    key={dev.id}
+                                    {...dev}
+                                    onToggleFollow={toggleFollow}
+                                />
+                            ))
+                        ) : (
+                            <div className="text-center py-20 bg-neutral-dark/40 border border-dashed border-slate-800 rounded-3xl">
+                                <p className="text-slate-500 font-medium">No developers found in this sector.</p>
+                            </div>
+                        )}
+                    </div>
+                )}
             </div>
         </Layout>
     );

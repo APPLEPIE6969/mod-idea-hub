@@ -28,6 +28,7 @@ export function useIdeas() {
                 query = query.ilike('title', `%${searchQuery}%`);
             }
 
+            const { data: { user } } = await supabase.auth.getUser();
             const { data, error } = await query;
 
             if (error) throw error;
@@ -38,7 +39,8 @@ export function useIdeas() {
                 author: idea.author?.username || 'Anonymous',
                 avatar: idea.author?.avatar_url,
                 upvotes: (idea.reactions || []).reduce((acc, curr) => acc + curr.reaction_type, 0),
-                comments: 0 // Mocking comments for now
+                comments: 0, // Still mocking comments for now
+                is_own_idea: user && idea.author_id === user.id
             }));
 
             setIdeas(processedIdeas);

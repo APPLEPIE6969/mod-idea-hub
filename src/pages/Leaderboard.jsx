@@ -1,8 +1,10 @@
-import { Trophy, TrendingUp, Users, Target, ChevronUp, Star, Award } from 'lucide-react';
+import { Trophy, TrendingUp, ChevronUp, Loader2, Award } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Layout from '../components/Layout';
+import { useDevelopers } from '../hooks/useDevelopers';
+import { useMemo } from 'react';
 
-const LeaderboardItem = ({ rank, username, upvotes, projects, engagement, avatar }) => (
+const LeaderboardItem = ({ rank, username, reputation, mods_count, ideas_count, avatar_url }) => (
     <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -18,7 +20,7 @@ const LeaderboardItem = ({ rank, username, upvotes, projects, engagement, avatar
         </div>
 
         <div className="flex items-center gap-3 flex-1 min-w-0">
-            <img src={avatar || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${username}`} alt={username} className="w-10 h-10 rounded-lg bg-slate-800" />
+            <img src={avatar_url || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${username}`} alt={username} className="w-10 h-10 rounded-lg bg-slate-800 object-cover" />
             <div className="flex flex-col truncate">
                 <span className="text-sm font-bold text-slate-100 group-hover:text-primary transition-colors">{username}</span>
                 <span className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Master Creator</span>
@@ -27,18 +29,18 @@ const LeaderboardItem = ({ rank, username, upvotes, projects, engagement, avatar
 
         <div className="hidden md:grid grid-cols-3 gap-8">
             <div className="flex flex-col items-center">
-                <span className="text-sm font-black text-primary italic">{upvotes}</span>
-                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Upvotes</span>
+                <span className="text-sm font-black text-primary italic">{reputation}</span>
+                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Rep</span>
             </div>
             <div className="flex flex-col items-center">
-                <span className="text-sm font-black text-accent-green italic">{projects}</span>
-                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Projects</span>
+                <span className="text-sm font-black text-accent-green italic">{mods_count}</span>
+                <span className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Mods</span>
             </div>
             <div className="flex flex-col items-center">
                 <div className="w-16 h-1 bg-slate-800 rounded-full mt-2 overflow-hidden">
                     <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: `${engagement}%` }}
+                        animate={{ width: `${Math.min(reputation / 10, 100)}%` }}
                         className="h-full bg-primary shadow-[0_0_10px_rgba(13,242,242,0.5)]"
                     />
                 </div>
@@ -53,19 +55,14 @@ const LeaderboardItem = ({ rank, username, upvotes, projects, engagement, avatar
 );
 
 export default function Leaderboard() {
-    const topThree = [
-        { rank: 1, username: 'EnergyMage', upvotes: '24.2k', projects: 24, engagement: 95, avatar: null },
-        { rank: 2, username: 'TimeKeeper', upvotes: '18.5k', projects: 18, engagement: 82, avatar: null },
-        { rank: 3, username: 'Caelum', upvotes: '15.1k', projects: 12, engagement: 74, avatar: null },
-    ];
+    const { developers, loading } = useDevelopers();
 
-    const others = [
-        { rank: 4, username: 'VoidWalker', upvotes: '12.4k', projects: 8, engagement: 65 },
-        { rank: 5, username: 'NatureGuard', upvotes: '9.2k', projects: 5, engagement: 58 },
-        { rank: 6, username: 'Alchemix', upvotes: '8.1k', projects: 4, engagement: 52 },
-        { rank: 7, username: 'RedstoneKing', upvotes: '7.5k', projects: 10, engagement: 48 },
-        { rank: 8, username: 'PixelArtist', upvotes: '6.9k', projects: 2, engagement: 42 },
-    ];
+    const sortedDevs = useMemo(() => {
+        return [...developers].sort((a, b) => b.reputation - a.reputation);
+    }, [developers]);
+
+    const topThree = sortedDevs.slice(0, 3);
+    const others = sortedDevs.slice(3);
 
     return (
         <Layout>
@@ -84,58 +81,67 @@ export default function Leaderboard() {
                     </div>
                 </header>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {topThree.map(item => (
-                        <motion.div
-                            key={item.rank}
-                            whileHover={{ y: -10 }}
-                            className={`relative bg-neutral-dark border border-slate-800 rounded-3xl p-8 flex flex-col items-center gap-4 shadow-2xl overflow-hidden ${item.rank === 1 ? 'border-yellow-500/30' : ''
-                                }`}
-                        >
-                            {item.rank === 1 && (
-                                <div className="absolute top-0 right-0 p-4">
-                                    <Award className="text-yellow-500 opacity-20" size={64} />
-                                </div>
-                            )}
-                            <div className={`relative p-1 rounded-4xl border-4 ${item.rank === 1 ? 'border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' :
-                                    item.rank === 2 ? 'border-slate-300 shadow-[0_0_20px_rgba(203,213,225,0.2)]' :
-                                        'border-amber-600 shadow-[0_0_15px_rgba(217,119,6,0.2)]'
-                                }`}>
-                                <img src={`https://api.dicebear.com/7.x/pixel-art/svg?seed=${item.username}`} className="w-24 h-24 rounded-3xl bg-slate-800" />
-                            </div>
-                            <div className="text-center">
-                                <h3 className="text-2xl font-black text-slate-100 italic uppercase">{item.username}</h3>
-                                <span className={`text-[10px] font-bold uppercase tracking-widest ${item.rank === 1 ? 'text-yellow-500' :
-                                        item.rank === 2 ? 'text-slate-300' :
-                                            'text-amber-600'
-                                    }`}>
-                                    RANK #{item.rank}
-                                </span>
-                            </div>
-                            <div className="flex gap-6 mt-4">
-                                <div className="text-center">
-                                    <p className="text-xl font-black text-slate-100 italic">{item.upvotes}</p>
-                                    <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Votes</p>
-                                </div>
-                                <div className="w-px h-8 bg-slate-800 self-center" />
-                                <div className="text-center">
-                                    <p className="text-xl font-black text-slate-100 italic">{item.projects}</p>
-                                    <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Mods</p>
-                                </div>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
+                {loading ? (
+                    <div className="flex flex-col items-center justify-center py-20 gap-4">
+                        <Loader2 size={48} className="animate-spin text-primary opacity-50" />
+                        <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Calculating Global Standings...</span>
+                    </div>
+                ) : (
+                    <>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {topThree.map((item, i) => (
+                                <motion.div
+                                    key={item.id}
+                                    whileHover={{ y: -10 }}
+                                    className={`relative bg-neutral-dark border border-slate-800 rounded-3xl p-8 flex flex-col items-center gap-4 shadow-2xl overflow-hidden ${i === 0 ? 'border-yellow-500/30' : ''
+                                        }`}
+                                >
+                                    {i === 0 && (
+                                        <div className="absolute top-0 right-0 p-4">
+                                            <Award className="text-yellow-500 opacity-20" size={64} />
+                                        </div>
+                                    )}
+                                    <div className={`relative p-1 rounded-4xl border-4 ${i === 0 ? 'border-yellow-500 shadow-[0_0_30px_rgba(234,179,8,0.2)]' :
+                                            i === 1 ? 'border-slate-300 shadow-[0_0_20px_rgba(203,213,225,0.2)]' :
+                                                'border-amber-600 shadow-[0_0_15px_rgba(217,119,6,0.2)]'
+                                        }`}>
+                                        <img src={item.avatar_url || `https://api.dicebear.com/7.x/pixel-art/svg?seed=${item.username}`} className="w-24 h-24 rounded-3xl bg-slate-800 object-cover" />
+                                    </div>
+                                    <div className="text-center">
+                                        <h3 className="text-2xl font-black text-slate-100 italic uppercase truncate max-w-[200px]">{item.username}</h3>
+                                        <span className={`text-[10px] font-bold uppercase tracking-widest ${i === 0 ? 'text-yellow-500' :
+                                                i === 1 ? 'text-slate-300' :
+                                                    'text-amber-600'
+                                            }`}>
+                                            RANK #{i + 1}
+                                        </span>
+                                    </div>
+                                    <div className="flex gap-6 mt-4">
+                                        <div className="text-center">
+                                            <p className="text-xl font-black text-slate-100 italic">{item.reputation}</p>
+                                            <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Rep</p>
+                                        </div>
+                                        <div className="w-px h-8 bg-slate-800 self-center" />
+                                        <div className="text-center">
+                                            <p className="text-xl font-black text-slate-100 italic">{item.mods_count}</p>
+                                            <p className="text-[8px] font-bold text-slate-500 uppercase tracking-widest">Mods</p>
+                                        </div>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
 
-                <div className="flex flex-col gap-3">
-                    <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest px-4 mb-2 flex items-center gap-2">
-                        <TrendingUp size={14} />
-                        Global Standings
-                    </h2>
-                    {others.map(item => (
-                        <LeaderboardItem key={item.rank} {...item} />
-                    ))}
-                </div>
+                        <div className="flex flex-col gap-3">
+                            <h2 className="text-xs font-bold text-slate-500 uppercase tracking-widest px-4 mb-2 flex items-center gap-2">
+                                <TrendingUp size={14} />
+                                Global Standings
+                            </h2>
+                            {others.map((item, i) => (
+                                <LeaderboardItem key={item.id} rank={i + 4} {...item} />
+                            ))}
+                        </div>
+                    </>
+                )}
             </div>
         </Layout>
     );

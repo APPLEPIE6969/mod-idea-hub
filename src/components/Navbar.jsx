@@ -122,7 +122,7 @@ export default function Navbar({ onPostClick, searchQuery, onSearchChange }) {
                                     initial={{ opacity: 0, y: 10, scale: 0.95 }}
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                                    transition={{ duration: 0.2 }}
+                                    transition={{ type: 'spring', damping: 25, stiffness: 250 }}
                                     className="absolute right-0 mt-3 w-56 bg-neutral-dark border border-slate-800 rounded-2xl shadow-2xl p-2 z-200 overflow-hidden"
                                 >
                                     <div className="px-3 py-3 border-b border-white/5 mb-2">
