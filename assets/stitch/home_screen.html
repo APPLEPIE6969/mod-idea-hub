@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mod &amp; Plugin Ideas Hub Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df2f2",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#0a1212",
+                        "neutral-dark": "#162a2a",
+                        "accent-green": "#22c55e",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glass-nav {
+            background: rgba(10, 18, 18, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(13, 242, 242, 0.1);
+        }
+        .idea-card:hover {
+            box-shadow: 0 0 20px rgba(13, 242, 242, 0.05);
+            border-color: rgba(13, 242, 242, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<header class="fixed top-0 w-full z-50 glass-nav">
+<div class="max-w-[1440px] mx-auto px-6 h-16 flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined text-3xl">deployed_code</span>
+<h1 class="text-xl font-bold tracking-tight text-slate-100">Hub<span class="text-primary">.</span></h1>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-sm font-medium text-primary border-b-2 border-primary pb-1" href="#">Explore</a>
+<a class="text-sm font-medium text-slate-400 hover:text-slate-100 transition-colors" href="#">Marketplace</a>
+<a class="text-sm font-medium text-slate-400 hover:text-slate-100 transition-colors" href="#">Developers</a>
+<a class="text-sm font-medium text-slate-400 hover:text-slate-100 transition-colors" href="#">Docs</a>
+</nav>
+</div>
+<div class="flex flex-1 justify-center max-w-xl px-8">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+<input class="w-full bg-neutral-dark/50 border border-slate-800 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-1 focus:ring-primary focus:border-primary transition-all" placeholder="Search mods, plugins, or creators..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 bg-primary text-background-dark px-4 py-2 rounded-lg font-bold text-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-sm">add_circle</span>
+<span>Post Idea</span>
+</button>
+<div class="h-8 w-px bg-slate-800 mx-2"></div>
+<button class="text-slate-400 hover:text-slate-100 transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-primary rounded-full border-2 border-background-dark"></span>
+</button>
+<div class="w-10 h-10 rounded-full bg-neutral-dark border border-slate-700 overflow-hidden">
+<img alt="User Profile" data-alt="User profile avatar icon with colorful abstract pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOpSc6dH_ukL5_UDEZwLrLLluyX40w_A4kcCur4QDtQg1HYMnyWfeZXhm1fqCgVZY2PWkwVaDOqUh5HXhtMh1xWM9UPKvj50eJxLBVer4i3vzNvk5Zs2Sgk5Cni82h2lX0xTZJ8hUu-kWqDDPtI648ixWNQWmyZuqVwdp1ru1eNmr6Pb59x12CKL7l7W9L0hNzYaBuyvmEFVbew-X9_Jfn9azkVMxIimSDE5Whu215e8FDc66siopC93tK0UMdLtoB5OtbO863h0s"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-[1440px] mx-auto pt-24 px-6 grid grid-cols-12 gap-8">
+<aside class="col-span-3 hidden lg:flex flex-col gap-8 sticky top-24 h-fit">
+<section class="flex flex-col gap-2">
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest px-2">Categories</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary border border-primary/20" href="#">
+<span class="material-symbols-outlined text-xl">square</span>
+<span class="text-sm font-semibold">Minecraft Mods</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-neutral-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">extension</span>
+<span class="text-sm font-medium">Server Plugins</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-neutral-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">build</span>
+<span class="text-sm font-medium">Developer Tools</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-400 hover:bg-neutral-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">brush</span>
+<span class="text-sm font-medium">Asset Packs</span>
+</a>
+</div>
+</section>
+<section class="flex flex-col gap-4">
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest px-2">Trending Tags</h3>
+<div class="flex flex-wrap gap-2 px-2">
+<span class="px-2 py-1 rounded bg-neutral-dark border border-slate-800 text-xs text-slate-300 hover:border-primary/40 cursor-pointer">#Optimization</span>
+<span class="px-2 py-1 rounded bg-neutral-dark border border-slate-800 text-xs text-slate-300 hover:border-primary/40 cursor-pointer">#Shaders</span>
+<span class="px-2 py-1 rounded bg-neutral-dark border border-slate-800 text-xs text-slate-300 hover:border-primary/40 cursor-pointer">#PaperMC</span>
+<span class="px-2 py-1 rounded bg-neutral-dark border border-slate-800 text-xs text-slate-300 hover:border-primary/40 cursor-pointer">#Forge</span>
+<span class="px-2 py-1 rounded bg-neutral-dark border border-slate-800 text-xs text-slate-300 hover:border-primary/40 cursor-pointer">#Fabric</span>
+</div>
+</section>
+<section class="bg-neutral-dark/40 border border-slate-800/50 rounded-xl p-4">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-primary text-xl">trophy</span>
+<h3 class="text-sm font-bold text-slate-200 uppercase tracking-tight">Top Ideators</h3>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-700">
+<img alt="Alex" class="rounded-full" data-alt="Small round user avatar with purple tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBb3Q0kDDsw--Dz_wflUHGlcr-R0fnTamTB6q-SXR8Oj3IRqGGMoXgrWBf9OaQ3pnt3nrwr6qA71nIHSIoR22_78HW_HjwL5mGrrarMGLJdRdgikfoIxSSNM2Ek6kNSI4elo4pBHcLd6wZQJBWryQ_Qo9DimtechHadDJ5I9Bf7LcITWQUPkLv_P6C4zKWSJnBlAEwY2DZmyvHNKOmplmRBZ0r9NPHSFkSHKThIWxUbHzO8ATtPRQm71OXNC7gRmbAWjzAnnObm9Nc"/>
+</div>
+<span class="text-xs font-medium">@AlexCraft</span>
+</div>
+<span class="text-[10px] text-primary font-bold">1,240 pts</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-700">
+<img alt="Pixel" class="rounded-full" data-alt="Small round user avatar with blue tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUsCNlgLC-x1bUoGigloLUTHeon5v2w6eTwOf4MfrxwLD75kqdOnGuMQBqCqpQ3sXSFofnCJ_6rkXk2Ljmmv3ft9qTj1jhTLtMLJc4khGz-reQKzAX-SexaF7eZHpteU5R3r6_OCOMrBNHe2Vl3_waFEq2MNPnFwKpUDMMZzV0uPsiu2RLdSK_C9J8t6JA6ptMY1jdkCzzl30rBWz2HY2MeRwa_zFp0P5EFndAhpHjov4XUFaKJ4QZmSGVkrDF67HXRZFsi7n8tBQ"/>
+</div>
+<span class="text-xs font-medium">@PixelMaster</span>
+</div>
+<span class="text-[10px] text-primary font-bold">980 pts</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-700">
+<img alt="Nova" class="rounded-full" data-alt="Small round user avatar with green tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD1AaUZqcribDMmY0Bc8WAuOQdLEZhzgIEqbz-yh8MJOnRIL9Mo_0SeoDdYYi7ihss5q0N8zuvLpMgmQsVcqZMOdveDAEyzwGPvaXhHOtM56fHxKULtWcYDMZeitdtKn-ynrWmJgHesO5Xxlz3Ib-C__V12-3L_b3uvwjP-vK4YG08lGDUBm4jxb-ryUL64RV1yHxgVDTV1C2AZ2Wzv8I-mWycee0PmlYl00K-XXnSAYRgUOKLK9TpCznqCpbezN48y_n9NrtLq_b4"/>
+</div>
+<span class="text-xs font-medium">@NovaDev</span>
+</div>
+<span class="text-[10px] text-primary font-bold">850 pts</span>
+</div>
+</div>
+</section>
+</aside>
+<div class="col-span-12 lg:col-span-6 flex flex-col gap-6">
+<div class="flex items-center justify-between pb-2">
+<div class="flex gap-4">
+<button class="text-sm font-bold border-b-2 border-primary text-slate-100 pb-1">Trending</button>
+<button class="text-sm font-medium text-slate-500 hover:text-slate-100 transition-colors pb-1">Newest</button>
+<button class="text-sm font-medium text-slate-500 hover:text-slate-100 transition-colors pb-1">Top Voted</button>
+</div>
+<div class="flex items-center gap-2 text-slate-500 text-sm">
+<span>Show:</span>
+<select class="bg-transparent border-none text-slate-200 text-xs focus:ring-0 cursor-pointer">
+<option>All Ideas</option>
+<option>Minecraft</option>
+<option>Plugins</option>
+</select>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<article class="idea-card bg-neutral-dark border border-slate-800 rounded-xl p-5 flex gap-6 transition-all cursor-pointer">
+<div class="flex flex-col items-center gap-1 min-w-[40px]">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">expand_less</span>
+</button>
+<span class="font-bold text-slate-200">1.2k</span>
+<button class="text-slate-500 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-3xl">expand_more</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded-full bg-primary/20 text-primary text-[10px] font-bold uppercase tracking-wider">Concept</span>
+<span class="text-slate-500 text-xs">• Posted by @VoxelHero 4h ago</span>
+</div>
+<h2 class="text-xl font-bold text-slate-100 group-hover:text-primary transition-colors">Dynamic Ecosystems &amp; Animal Migration</h2>
+<p class="text-slate-400 text-sm leading-relaxed line-clamp-2">A complete overhaul of how animals behave. They should travel in herds across biomes based on seasons, requiring players to track them for resources.</p>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-slate-500 hover:text-slate-300">
+<span class="material-symbols-outlined text-lg">chat_bubble</span>
+<span class="text-xs font-semibold">142 Comments</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-500 hover:text-slate-300">
+<span class="material-symbols-outlined text-lg">share</span>
+<span class="text-xs font-semibold">Share</span>
+</div>
+</div>
+<div class="flex items-center -space-x-2">
+<div class="w-6 h-6 rounded-full border border-background-dark bg-slate-700"><img alt="1" class="rounded-full" data-alt="Minimalist avatar circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD8IJOhs9rBun25m08eFYexug9cmh-X7cSr4eOYq3Rggnujxd2ovzlO0lAYGFxdugQnz5IeM5vA3zreNjj8cgbY7_LJlHWG9S5hCcnBuWb5UzzaTuMAVCfxD4T16v-39zACOrCM7aCcl9jhwIqAdroX-Q0r5Ey8XTsilMSsSJVmjzDHabft_9hjibsIoalE2T51jIvNsssYFTLFhOJYmXMrQXEzNZDeT65WSLW1KmLv-RaipZHzs1jQxVc-j4oMjAo3xBT-Gt-gAiU"/></div>
+<div class="w-6 h-6 rounded-full border border-background-dark bg-slate-700"><img alt="2" class="rounded-full" data-alt="Minimalist avatar circle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB6uPQ7Lg7CJLSP6pO4EYTL8gxElyTAnm95FTLeermJuc45KdNm5soE8XaZ0c4DM7sLy0IlGEBKfR2AF4SyO8DsyOR0ITnAhbbD1WD64QMTaxTeo__6Yn65iemLoiOW0nOs1Y9IsWvbW1oAQsblo14wuPNcvZkKjOkOfq-a8Hiia7UsyenTifswLfw8giaigwHbKKSYaSFgLe70z46RIlqR4tL9MuGymrfEVMe7cKtP6IwUxcslTgT_75xuY-yTltp4EsbxoLcBcn4"/></div>
+<div class="w-6 h-6 rounded-full border border-background-dark bg-slate-700 flex items-center justify-center text-[10px] text-slate-400">+5</div>
+</div>
+</div>
+</div>
+<div class="w-32 h-32 hidden md:block shrink-0 rounded-lg overflow-hidden border border-slate-800">
+<img alt="Preview" class="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all" data-alt="Abstract blocky landscape pattern in greens and browns" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0yXfWfzVGNB84CN9AhV62jeG5Rr2fv9hdB6limO6vApNSGoyrHO5Q9UzWvbcF-4Jos0bMg7R2nTiKbn32_i2X3DWsFT3Tui92V_IhSbfMe1AE9Z0Y5ZLeFEmE9KdIKVzN2s91E3AXD6IBfSQAvGoQydlcxddc3lKfbo7szAaP_-wzJIysbsRa8wZe-OKt7-gzFc__YB1uBck0cwEEcQvWcKUb2h3oqYPxLaDNUJiubBDA2yP4cAS9IblFKSqTkmjkF2WIPogQpVM"/>
+</div>
+</article>
+<article class="idea-card bg-neutral-dark border border-slate-800 rounded-xl p-5 flex gap-6 transition-all cursor-pointer">
+<div class="flex flex-col items-center gap-1 min-w-[40px]">
+<button class="text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">expand_less</span>
+</button>
+<span class="font-bold text-slate-200">856</span>
+<button class="text-slate-500 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-3xl">expand_more</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded-full bg-accent-green/20 text-accent-green text-[10px] font-bold uppercase tracking-wider">In Progress</span>
+<span class="text-slate-500 text-xs">• Posted by @DevMax 12h ago</span>
+</div>
+<h2 class="text-xl font-bold text-slate-100">Quantum Storage Network Plugin</h2>
+<p class="text-slate-400 text-sm leading-relaxed line-clamp-2">Looking for contributors to help build a cross-server item storage system using Redis and NATS. Zero-latency item syncing for network hubs.</p>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-slate-500 hover:text-slate-300">
+<span class="material-symbols-outlined text-lg">chat_bubble</span>
+<span class="text-xs font-semibold">89 Comments</span>
+</div>
+<div class="flex items-center gap-1.5 text-slate-500 hover:text-slate-300">
+<span class="material-symbols-outlined text-lg">terminal</span>
+<span class="text-xs font-semibold">3 Devs Joined</span>
+</div>
+</div>
+</div>
+</div>
+<div class="w-32 h-32 hidden md:block shrink-0 rounded-lg overflow-hidden border border-slate-800">
+<div class="w-full h-full bg-gradient-to-br from-primary/20 to-purple-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-4xl text-primary/40">dns</span>
+</div>
+</div>
+</article>
+<article class="idea-card bg-neutral-dark border border-slate-800 rounded-xl p-5 flex gap-6 transition-all cursor-pointer">
+<div class="flex flex-col items-center gap-1 min-w-[40px]">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-3xl">expand_less</span>
+</button>
+<span class="font-bold text-slate-200">2.4k</span>
+<button class="text-slate-500 hover:text-red-500 transition-colors">
+<span class="material-symbols-outlined text-3xl">expand_more</span>
+</button>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<div class="flex items-center gap-2 mb-1">
+<span class="px-2 py-0.5 rounded-full bg-orange-500/20 text-orange-500 text-[10px] font-bold uppercase tracking-wider">Help Wanted</span>
+<span class="text-slate-500 text-xs">• Posted by @BuilderBob 1d ago</span>
+</div>
+<h2 class="text-xl font-bold text-slate-100">Real-time Voxel Physics Mod</h2>
+<p class="text-slate-400 text-sm leading-relaxed line-clamp-2">A mod that adds structural integrity and collapse mechanics to buildings. We need help optimizing the calculation for large-scale explosions.</p>
+<div class="mt-4 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-slate-500 hover:text-slate-300">
+<span class="material-symbols-outlined text-lg">chat_bubble</span>
+<span class="text-xs font-semibold">312 Comments</span>
+</div>
+</div>
+</div>
+</div>
+</article>
+</div>
+</div>
+<aside class="col-span-3 hidden xl:flex flex-col gap-6 sticky top-24 h-fit">
+<div class="bg-gradient-to-br from-primary/20 to-transparent border border-primary/20 rounded-xl p-5">
+<h3 class="text-slate-100 font-bold mb-2">New Feature!</h3>
+<p class="text-xs text-slate-400 mb-4">You can now directly fund mod concepts using our integrated developer bounties system.</p>
+<button class="w-full bg-primary/20 text-primary border border-primary/40 py-2 rounded font-bold text-xs hover:bg-primary/30 transition-all">Learn More</button>
+</div>
+<section class="flex flex-col gap-4">
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest px-2">Community Stats</h3>
+<div class="grid grid-cols-2 gap-3">
+<div class="bg-neutral-dark border border-slate-800 p-3 rounded-lg">
+<div class="text-primary text-lg font-black">4.2k</div>
+<div class="text-[10px] text-slate-500 uppercase font-bold">Ideas Posted</div>
+</div>
+<div class="bg-neutral-dark border border-slate-800 p-3 rounded-lg">
+<div class="text-accent-green text-lg font-black">156</div>
+<div class="text-[10px] text-slate-500 uppercase font-bold">Mods Shipped</div>
+</div>
+</div>
+</section>
+<section class="flex flex-col gap-4">
+<h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest px-2">Recent Bounties</h3>
+<div class="flex flex-col gap-3">
+<div class="p-3 bg-neutral-dark/80 border border-slate-800 rounded-lg hover:border-slate-600 transition-colors cursor-pointer">
+<p class="text-xs text-slate-300 font-medium mb-1 line-clamp-1">Custom Inventory HUD for Forge 1.20</p>
+<div class="flex items-center justify-between">
+<span class="text-[10px] text-slate-500">2 days remaining</span>
+<span class="text-xs font-bold text-accent-green">$250</span>
+</div>
+</div>
+<div class="p-3 bg-neutral-dark/80 border border-slate-800 rounded-lg hover:border-slate-600 transition-colors cursor-pointer">
+<p class="text-xs text-slate-300 font-medium mb-1 line-clamp-1">Anti-Cheat Bypass Detection System</p>
+<div class="flex items-center justify-between">
+<span class="text-[10px] text-slate-500">5 days remaining</span>
+<span class="text-xs font-bold text-accent-green">$500</span>
+</div>
+</div>
+</div>
+</section>
+<footer class="mt-8 px-2">
+<div class="flex flex-wrap gap-x-4 gap-y-2 mb-4">
+<a class="text-[10px] text-slate-600 hover:text-slate-400" href="#">About</a>
+<a class="text-[10px] text-slate-600 hover:text-slate-400" href="#">Privacy</a>
+<a class="text-[10px] text-slate-600 hover:text-slate-400" href="#">Terms</a>
+<a class="text-[10px] text-slate-600 hover:text-slate-400" href="#">API</a>
+</div>
+<p class="text-[10px] text-slate-700">© 2024 ModHub Premium Creators. All rights reserved.</p>
+</footer>
+</aside>
+</main>
+<div class="fixed bottom-8 right-8 z-50 lg:hidden">
+<button class="w-14 h-14 bg-primary text-background-dark rounded-full shadow-lg flex items-center justify-center hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+</body></html>

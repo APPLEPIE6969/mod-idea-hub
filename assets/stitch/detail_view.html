@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mod Idea Detailed View | ModHub</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0df2f2",
+                        "background-light": "#f5f8f8",
+                        "background-dark": "#102222",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased min-h-screen">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 px-6 lg:px-40 py-3 bg-background-light dark:bg-background-dark sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<div class="size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M12.0799 24L4 19.2479L9.95537 8.75216L18.04 13.4961L18.0446 4H29.9554L29.96 13.4961L38.0446 8.75216L44 19.2479L35.92 24L44 28.7521L38.0446 39.2479L29.96 34.5039L29.9554 44H18.0446L18.04 34.5039L9.95537 39.2479L4 28.7521L12.0799 24Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-tight">ModHub</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-500 dark:text-slate-400 flex border-none bg-slate-100 dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-0 h-full placeholder:text-slate-500 px-4 rounded-r-lg pl-2 text-sm" placeholder="Search ideas..."/>
+</div>
+</label>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Browse</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Developers</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Showcase</a>
+</nav>
+<button class="bg-primary hover:bg-primary/90 text-background-dark text-sm font-bold h-10 px-6 rounded-lg transition-all shadow-lg shadow-primary/20">
+                        Sign Up
+                    </button>
+</div>
+</header>
+<main class="flex flex-1 justify-center py-8">
+<div class="layout-content-container flex flex-col max-w-[1200px] flex-1 px-4 lg:px-10">
+<!-- Breadcrumbs & Status Bar -->
+<div class="flex flex-wrap items-center gap-2 mb-6 text-sm text-slate-500 dark:text-slate-400">
+<a class="hover:text-primary" href="#">Home</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<a class="hover:text-primary" href="#">Mod Ideas</a>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-slate-200 font-medium">Magic Tech Expansion</span>
+</div>
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start gap-6 mb-8">
+<div class="space-y-4">
+<div class="flex flex-wrap items-center gap-3">
+<span class="bg-emerald-500/10 text-emerald-500 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/20 flex items-center gap-1">
+<span class="size-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                                    IN DEVELOPMENT
+                                </span>
+<span class="bg-primary/10 text-primary text-xs font-bold px-3 py-1 rounded-full border border-primary/20 uppercase">Featured Idea</span>
+</div>
+<h1 class="text-slate-900 dark:text-white text-4xl lg:text-5xl font-black tracking-tight">Magic Tech Expansion</h1>
+<div class="flex items-center gap-4">
+<div class="size-12 rounded-full bg-slate-200 dark:bg-slate-800 border-2 border-primary/30 overflow-hidden">
+<img alt="Author" data-alt="Cyberpunk style user profile avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzqUBDgW9lBVFwms5Z7IrFMAihkotH-Bv8VPqYLnZx-EJ7rOyR1ScBFM6thYEvP5_c8Zbz56QEVZRYLj05ripMGdhgV9gsuLVprqGjssbnvPZkrZmw67utvtfZvzVNpsKoXCzTwq1tLiilkmSJHVx8AEo09J2ep_pTQSrPAZ8x3pyVM2nGBJrNW0X9h01gC9JOTo9aSzx9cqRNcxHtbZ6J1exCDShmVu6h1ICuMbGl0rZYSKnW6Gg18WEOwZeUb0gpZr5-ILpNyp8"/>
+</div>
+<div>
+<p class="text-slate-900 dark:text-white font-bold leading-tight">AetherBuilder</p>
+<p class="text-slate-500 text-sm">Elite Creator • Posted 2 days ago</p>
+</div>
+<button class="ml-2 text-primary border border-primary/20 hover:bg-primary/10 px-4 py-1 rounded-lg text-sm font-bold transition-all">Follow</button>
+</div>
+</div>
+<div class="flex gap-3 w-full md:w-auto">
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-6 h-12 bg-white/5 backdrop-blur-md border border-white/10 hover:bg-white/10 text-white rounded-xl transition-all font-bold">
+<span class="material-symbols-outlined">visibility</span>
+                                Watch
+                            </button>
+<button class="flex-1 md:flex-none flex items-center justify-center gap-2 px-8 h-12 bg-primary text-background-dark rounded-xl transition-all font-bold shadow-[0_0_20px_rgba(13,242,242,0.4)] hover:shadow-[0_0_30px_rgba(13,242,242,0.6)]">
+                                Claim Idea
+                            </button>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Left Main Column -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Carousel Section -->
+<div class="relative group aspect-video rounded-2xl overflow-hidden bg-slate-900 border border-slate-800 shadow-2xl">
+<img class="w-full h-full object-cover opacity-80" data-alt="Futuristic magic crystals and mechanical gears concept art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwOyP5zcMZkqoRj0Vu7pIa2QmersnVIYAflO4_tht6-UuM9H5ehCL4VsNzA6wByUjIlOEr0xxewS9I-1p8ibw0K49MbNc8vh3ShVVuLCH1AFHrj_2IZN8AnwDfqBA1kQ7o7rSTSfEsQFzYAatleEYHjlsEn7sdJLebSn7mMHleO4-eSvLkbsUfJHwsHXSn5cwCJxkgglH1iuVE4aJF8MOiPKjuW-lWWLj2n0wRqdFxk_6mFvUWCOA4mLdJaJNzLiA5w-cgTyzev0Q"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark/80 to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+<div class="text-white">
+<h3 class="font-bold text-lg">Concept: Arcane Engine</h3>
+<p class="text-sm text-slate-300">Visualizing the core generator mechanism.</p>
+</div>
+<div class="flex gap-2">
+<button class="size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full text-white">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="size-10 flex items-center justify-center bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 rounded-full text-white">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Markdown Content -->
+<article class="prose prose-invert max-w-none bg-slate-900/40 p-8 rounded-2xl border border-slate-800">
+<h2 class="text-2xl font-bold text-white mb-4">The Vision</h2>
+<p class="text-slate-300 leading-relaxed mb-6">
+                                    This mod aims to bridge the gap between high-tech automation and deep mystical sorcery. Unlike existing "Technomancy" mods, Magic Tech Expansion focuses on the *mechanical* properties of magic. Imagine gears powered by liquid mana and circuits etched with ethereal runes.
+                                </p>
+<h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">terminal</span>
+                                    Implementation Hook
+                                </h3>
+<div class="bg-black/60 rounded-xl p-6 font-mono text-sm border border-slate-700 mb-6 overflow-x-auto">
+<div class="flex gap-1 mb-4">
+<div class="size-3 rounded-full bg-red-500/50"></div>
+<div class="size-3 rounded-full bg-yellow-500/50"></div>
+<div class="size-3 rounded-full bg-green-500/50"></div>
+</div>
+<p class="text-pink-400">@Override</p>
+<p class="text-slate-400">public void <span class="text-blue-400">applyArcanePressure</span>(BlockPos pos) {</p>
+<p class="pl-4 text-slate-300">ManaNetwork network = WorldState.<span class="text-yellow-400">getNetwork</span>(pos);</p>
+<p class="pl-4 text-slate-300">float pressure = network.<span class="text-yellow-400">calculatePsi</span>();</p>
+<p class="pl-4 text-slate-500">// Trigger mechanical reaction</p>
+<p class="pl-4 text-slate-300"><span class="text-purple-400">if</span> (pressure &gt; <span class="text-orange-400">100.0f</span>) {</p>
+<p class="pl-8 text-slate-300">this.<span class="text-yellow-400">overloadCircuit</span>(pos, <span class="text-primary">EnumMagicType.CELESTIAL</span>);</p>
+<p class="pl-4 text-slate-300">}</p>
+<p class="text-slate-400">}</p>
+</div>
+<h3 class="text-xl font-bold text-white mb-4">Key Features</h3>
+<ul class="list-disc list-inside space-y-2 text-slate-300">
+<li><strong class="text-white">Runic Logic Gates:</strong> Build computers using specialized magic gems.</li>
+<li><strong class="text-white">Aether Pipelines:</strong> Transport mana across your base with physical pipes.</li>
+<li><strong class="text-white">Alchemical Furnaces:</strong> Smelt ores using pure spiritual essence.</li>
+</ul>
+</article>
+<!-- Engagement Bar -->
+<div class="flex flex-wrap items-center justify-between gap-4 bg-slate-900 p-4 rounded-2xl border border-slate-800">
+<div class="flex items-center gap-1 bg-slate-800 rounded-xl p-1">
+<button class="p-2 hover:bg-slate-700 text-slate-400 hover:text-primary rounded-lg transition-colors">
+<span class="material-symbols-outlined">arrow_upward</span>
+</button>
+<span class="px-2 font-bold text-slate-100">1,248</span>
+<button class="p-2 hover:bg-slate-700 text-slate-400 hover:text-red-400 rounded-lg transition-colors">
+<span class="material-symbols-outlined">arrow_downward</span>
+</button>
+</div>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-2 px-4 py-2 hover:bg-slate-800 text-slate-300 rounded-xl transition-colors">
+<span class="material-symbols-outlined text-xl">share</span>
+                                        Share
+                                    </button>
+<button class="flex items-center gap-2 px-4 py-2 hover:bg-slate-800 text-slate-300 rounded-xl transition-colors">
+<span class="material-symbols-outlined text-xl">flag</span>
+                                        Report
+                                    </button>
+</div>
+</div>
+<!-- Comments Section -->
+<div class="space-y-6">
+<h3 class="text-xl font-bold text-white">Discussion (42)</h3>
+<div class="flex gap-4">
+<div class="size-10 rounded-full bg-slate-800 shrink-0 border border-slate-700">
+<img alt="Me" data-alt="Your profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC-mELu7kUXR41v1fQXGpWn6ugUlbBCrRXupWKPCuSKFLAffNDPl7V0AOnk1NV1FFUKmRUCmBCQIaMxcDzHZgEiggKeljhUYLU2huWQcSUa0bsJ-tT4oBApflQDLP9vDMzXraIPautQcOIjVdK8W1MRtwKhZdLwGwh1aftswMLAYA6QFKGSq0pAerd_bfm62hUW8uaPfbNaqRHTdoCC1ci1qHRGC6QMAJu5kH2p5L7Ed3e50owWFoAv69EHzKucsRZrkwLpWLS1U8Y"/>
+</div>
+<div class="flex-1">
+<textarea class="w-full bg-slate-900 border-slate-800 rounded-xl focus:ring-primary focus:border-primary text-slate-200 p-4 min-h-[100px]" placeholder="Add your feedback or suggest a feature..."></textarea>
+<div class="mt-2 flex justify-end">
+<button class="bg-primary text-background-dark font-bold px-6 py-2 rounded-lg">Post Comment</button>
+</div>
+</div>
+</div>
+<!-- Comment Thread -->
+<div class="space-y-6">
+<!-- Parent Comment -->
+<div class="flex gap-4">
+<div class="size-10 rounded-full bg-slate-800 shrink-0 border border-slate-700">
+<img alt="User" data-alt="Commenter profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB5hnmJgfA0_ojAGHvC3eRGu8xl18eREqqD8ieT3Lgliqdm31EYHGEKJXv_5CirwNtin-mdLvx7HKzsDmQndD0lwvcSJW9V-whONakg4b0CVSvm1UgcKBqpnEr32DRu3EdFOAG4tV8PPztAmQFf36no3qMzQ9Ukchpvc5zpqgxY4ONHmwdPcEyvfyfqJEsjCVbZ3Rm4vTE9wZpf2yAfwd8P6eODTuuoNAfBdZ1KleLrDaYW5ZhKDGCoXw_WGomtxbXlVDtUzogSGQw"/>
+</div>
+<div class="space-y-3 flex-1">
+<div class="flex items-center gap-2">
+<span class="font-bold text-white">TechnoMage_99</span>
+<span class="text-xs text-slate-500">5 hours ago</span>
+</div>
+<p class="text-slate-300">This is exactly what the tech mod scene needs. Have you considered adding a cross-mod API for RF compatibility?</p>
+<div class="flex items-center gap-4 text-slate-500 text-sm">
+<button class="hover:text-primary flex items-center gap-1">
+<span class="material-symbols-outlined text-lg">thumb_up</span> 12
+                                                </button>
+<button class="hover:text-primary">Reply</button>
+</div>
+<!-- Nested Comment -->
+<div class="ml-4 pl-4 border-l-2 border-slate-800 space-y-4 pt-2">
+<div class="flex gap-3">
+<div class="size-8 rounded-full bg-slate-800 shrink-0 border border-slate-700">
+<img alt="Author" data-alt="Author profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAbUfFp0eeUgT555tSPLJpItNcX1x-EPr8wZEUnnsK74aCtjrQVe4xvrS7dG5IclriK1b_ijZ6gLDmaTYeo4vfpbnEgYTlaSSGAre-zIl7Vb8UCpcf9cs6PCtHs1_kMkkWW60NiM-AZlooebkA7o2EVXTaYrDCbp6DQYBppPoZwmpzHp3L97fXah9gzr2xCVPx9AN08CuQo1rxeaLU2mgGZFtKX6dF2mPAJAPb1tor5Vla9a-Ofc5XoJLR3Qqs-m5UN9Ms68eV_jSs"/>
+</div>
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="font-bold text-primary">AetherBuilder</span>
+<span class="bg-primary/20 text-primary text-[10px] px-1.5 rounded">OP</span>
+</div>
+<p class="text-slate-400 text-sm">Yes! Working on a 'Mana-to-RF' transducer block as we speak.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Sidebar Column -->
+<aside class="space-y-8">
+<!-- Metadata Card -->
+<div class="bg-slate-900 p-6 rounded-2xl border border-slate-800 space-y-6">
+<h4 class="font-bold text-white uppercase tracking-wider text-xs">Technical Details</h4>
+<div class="space-y-4">
+<div class="flex items-center justify-between text-sm">
+<span class="text-slate-500">Game Version</span>
+<span class="text-slate-200 bg-slate-800 px-2 py-1 rounded">Minecraft 1.20.1</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<span class="text-slate-500">Loaders</span>
+<span class="flex gap-2">
+<span class="text-slate-200 bg-slate-800 px-2 py-1 rounded">Forge</span>
+<span class="text-slate-200 bg-slate-800 px-2 py-1 rounded">Fabric</span>
+</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<span class="text-slate-500">Category</span>
+<span class="text-primary font-medium underline">Magic / Tech</span>
+</div>
+<div class="flex items-center justify-between text-sm">
+<span class="text-slate-500">Complexity</span>
+<span class="text-orange-400">Hard</span>
+</div>
+</div>
+<hr class="border-slate-800"/>
+<div class="space-y-4">
+<h4 class="font-bold text-white uppercase tracking-wider text-xs">Supporters</h4>
+<div class="flex -space-x-2">
+<img class="size-8 rounded-full border-2 border-slate-900" data-alt="Supporter avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC6phLfsUE7MeiSDVlAWidYENWLluQuK7V93-Qt1KaK41DJKI1wIoezXLXaimAjZxmx_WujylEUi35TeCe900XFmCYJPHTuYh9QveuK0qF8Xdlu2S1NllQ5W3IrEFx710uj6CBTZgB9vhGSaFYoa2gJ08iFW72uW-8zo6jge8MlqnynbGSRUoVqTEKPikjjcDU2-on1Uvb_kvGN6uRsitlDxv-kw62LL-dqHTuq3QwlkNGCsNOYYI0uLWCt7xOTN1P37_WiYS8za9I"/>
+<img class="size-8 rounded-full border-2 border-slate-900" data-alt="Supporter avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAavt_dHmoIZF6w8yK0NM0_tTxc97W8JJLd-citDd6jPo019M97tyGY25FGC-UJ0f40IUaaASNY_yS89DanFaio504Tih8p9Mz3pIS14J6-moI0EJFjmtRnz0wJKWhEBYDAWCK6RKXY2kmfDVWFhoeTj77Devxj0z66ISH2FNJzIjZXgTYJsXYIl1IqOD03aRud99g1OVus-srpkcsLiiCsTxHEpxsroesUk6TZ8_fN2CisdyzTHv75P9_Kjp1zcroE0xP0cUPO81c"/>
+<img class="size-8 rounded-full border-2 border-slate-900" data-alt="Supporter avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDKVqPI7_aCvzYaOiqOHf9b7sltgNkF2DqmO_Xze4Txr80yl7C2ZYX4RxxAJT9QEacZprRtLvN8ZCN445kMhfvZJsZScyk639NRk0V0Qh1nrlZ7G3un5Cgd8RGT_nKFck91qZmd9TbAt2o1LKRKtdOQ-7ygqH91hGToSmH7PAGx049mtVtIuxySkupqnUPW3eM21jMNoeKHdMwyC9q35-F0YXB2F8ptzi50-5Dl-55j0afO7idpytdxL7ZwMdmkuJkhOL_RlepAGGU"/>
+<img class="size-8 rounded-full border-2 border-slate-900" data-alt="Supporter avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV-0uAR3kJIFAdXYtiC6zZlN2MQLeyu7oQWJKqqreNpvrlieHVlFlD0PhRirKLYXQZy55li8cA-EsGUQZbB9jKFbPd0G6PYMipCdYcpJtx9VBzGcTT1k2gkll57DuLJyWTKcVzMPAbeOJNg52NgjPldoSqI8rXeZ1eXrRC5V6F600ir_iHEs8tAmUCK1MUPoMh0tBiDrja_iEWo7nlL3GYH_DNIkUl88N7mV_7J3jI5O-erHcKg6RLFIV6ku_ZCPfwAJaqUQqHlUA"/>
+<div class="size-8 rounded-full border-2 border-slate-900 bg-slate-800 flex items-center justify-center text-[10px] text-white font-bold">+18</div>
+</div>
+<button class="w-full py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl text-sm font-bold transition-all border border-slate-700">Become a Supporter</button>
+</div>
+</div>
+<!-- Related Ideas -->
+<div class="space-y-4">
+<h4 class="font-bold text-white uppercase tracking-wider text-xs">Related Ideas</h4>
+<div class="space-y-3">
+<a class="block group bg-slate-900/50 hover:bg-slate-900 p-3 rounded-xl border border-slate-800 transition-all" href="#">
+<p class="text-white font-medium group-hover:text-primary transition-colors text-sm">Modular Golem Workers</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] text-slate-500">8.2k Views</span>
+<span class="text-[10px] text-emerald-500">92% Upvoted</span>
+</div>
+</a>
+<a class="block group bg-slate-900/50 hover:bg-slate-900 p-3 rounded-xl border border-slate-800 transition-all" href="#">
+<p class="text-white font-medium group-hover:text-primary transition-colors text-sm">Void Dimension Engine</p>
+<div class="flex items-center gap-2 mt-1">
+<span class="text-[10px] text-slate-500">1.5k Views</span>
+<span class="text-[10px] text-emerald-500">88% Upvoted</span>
+</div>
+</a>
+</div>
+</div>
+<!-- Ad/CTA -->
+<div class="relative rounded-2xl overflow-hidden aspect-[4/5] group cursor-pointer border border-primary/20">
+<img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="Cool gaming setup with neon lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGJ0yxq26jS3Mv7M1Ln9xhNm6fV7Uxc1M9hJFdjQy__dOiqdP53ZZNHOiZQf7eapZuGWD5cpstq3iFO0Szv8PDy_NI2bYZY0Ccgx2Q_yy-PTOu8rglxyK6bPeMJbEIreCDiFDpYkt9Z6YGvnGXEOtknQ4Oym8l7cF8plps1tmBbK2gJurm-SJVT3U8KjUoTJ_tW8Gnzqrg0zxZvX6NoLJWJkWJ5LoXjmM4v8EF2zqBQdHkJ5R4d47PofF5TcAcYlHbB5Xu6lTG0eU"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/40 to-transparent"></div>
+<div class="absolute bottom-6 left-6 right-6">
+<p class="text-primary text-[10px] font-black uppercase tracking-widest mb-2">Developer Tool</p>
+<h4 class="text-white font-bold text-xl leading-tight mb-4">Master Java for Minecraft Plugins</h4>
+<button class="w-full py-3 bg-primary text-background-dark font-black text-sm rounded-xl">Learn More</button>
+</div>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Simple Footer -->
+<footer class="border-t border-slate-800 py-12 px-10 text-center">
+<p class="text-slate-500 text-sm">© 2024 ModHub. All rights reserved. Premium Mod &amp; Plugin Ideas for Creators.</p>
+<div class="flex justify-center gap-6 mt-4">
+<a class="text-slate-400 hover:text-white text-xs" href="#">Privacy Policy</a>
+<a class="text-slate-400 hover:text-white text-xs" href="#">Terms of Service</a>
+<a class="text-slate-400 hover:text-white text-xs" href="#">Discord Support</a>
+</div>
+</footer>
+</div>
+</div>
+</body></html>

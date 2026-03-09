@@ -1,59 +1,46 @@
-import { ChevronUp, ChevronDown, MessageSquare, Share2, MoreHorizontal } from 'lucide-react';
+import { ChevronUp, ChevronDown, MessageSquare, Share2 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export default function IdeaCard({ idea }) {
-    const { title, author, category, status, upvotes = 0, comments = 0, tags = [] } = idea;
+    const { id, title, description, author, category, status, upvotes = 0, comments = 0 } = idea;
+
+    const voteDisplay = upvotes >= 1000 ? (upvotes / 1000).toFixed(1) + 'k' : upvotes;
 
     return (
-        <div className="glass p-5 rounded-2xl flex gap-5 hover:border-white/20 transition-all group cursor-pointer">
-            {/* Voting Sidebar */}
-            <div className="flex flex-col items-center gap-1 mt-1">
-                <button className="p-1.5 rounded-lg hover:bg-white/5 hover:text-accent-neon transition-colors">
-                    <ChevronUp size={24} />
+        <article className="idea-card bg-neutral-dark border border-slate-800 rounded-xl p-5 flex gap-6 transition-all group hover:border-primary/30">
+            <div className="flex flex-col items-center gap-1 min-w-[40px]">
+                <button className="text-slate-500 hover:text-primary transition-colors bg-transparent border-none p-0 cursor-pointer outline-none">
+                    <ChevronUp size={32} />
                 </button>
-                <span className="text-sm font-bold">{upvotes}</span>
-                <button className="p-1.5 rounded-lg hover:bg-white/5 hover:text-red-400 transition-colors">
-                    <ChevronDown size={24} />
+                <span className="font-bold text-slate-200">{voteDisplay}</span>
+                <button className="text-slate-500 hover:text-red-500 transition-colors bg-transparent border-none p-0 cursor-pointer outline-none">
+                    <ChevronDown size={32} />
                 </button>
             </div>
-
-            {/* Content */}
-            <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2 text-[11px] font-bold uppercase tracking-wider">
-                    <span className={`badge ${status === 'Verified' ? 'badge-verified' :
-                            status === 'In Progress' ? 'badge-in-progress' : 'badge-concept'
+            <Link to={`/idea/${id}`} className="flex-1 flex flex-col gap-2 no-underline cursor-pointer">
+                <div className="flex items-center gap-2 mb-1">
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${status === 'Verified' ? 'bg-accent-green/20 text-accent-green' :
+                            status === 'In Progress' ? 'bg-primary/20 text-primary' : 'bg-slate-500/20 text-slate-400'
                         }`}>
-                        {status}
+                        {status || 'Draft'}
                     </span>
-                    <span className="text-text-muted">•</span>
-                    <span className="text-accent-neon">{category}</span>
-                    <span className="text-text-muted">•</span>
-                    <span className="text-text-muted">Posted by {author}</span>
+                    <span className="text-slate-500 text-xs font-medium">• Posted by @{author || 'anonymous'}</span>
                 </div>
-
-                <h3 className="text-xl font-bold mb-2 group-hover:text-accent-neon transition-colors">{title}</h3>
-
-                <div className="flex flex-wrap gap-2 mb-4">
-                    {tags.map(tag => (
-                        <span key={tag} className="text-[10px] bg-white/5 px-2 py-0.5 rounded-md text-text-secondary border border-white/5 hover:border-white/10">
-                            #{tag}
-                        </span>
-                    ))}
+                <h2 className="text-xl font-bold text-slate-100 group-hover:text-primary transition-colors">{title}</h2>
+                <p className="text-slate-400 text-sm leading-relaxed line-clamp-2">{description}</p>
+                <div className="mt-4 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                        <div className="flex items-center gap-1.5 text-slate-500 hover:text-slate-300 transition-colors">
+                            <MessageSquare size={18} />
+                            <span className="text-xs font-semibold">{comments} Comments</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-slate-500 hover:text-slate-300 transition-colors">
+                            <Share2 size={18} />
+                            <span className="text-xs font-semibold">Share</span>
+                        </div>
+                    </div>
                 </div>
-
-                <div className="flex items-center gap-6 text-text-secondary">
-                    <button className="flex items-center gap-2 text-xs font-semibold hover:bg-white/5 px-3 py-1.5 rounded-lg transition-all">
-                        <MessageSquare size={16} />
-                        {comments} Comments
-                    </button>
-                    <button className="flex items-center gap-2 text-xs font-semibold hover:bg-white/5 px-3 py-1.5 rounded-lg transition-all">
-                        <Share2 size={16} />
-                        Share
-                    </button>
-                    <button className="ml-auto p-1.5 hover:bg-white/5 rounded-lg transition-all">
-                        <MoreHorizontal size={18} />
-                    </button>
-                </div>
-            </div>
-        </div>
+            </Link>
+        </article>
     );
 }

@@ -4,71 +4,88 @@ import CreateIdeaModal from './components/CreateIdeaModal';
 import { useIdeas } from './hooks/useIdeas';
 import { useState } from 'react';
 import Navbar from './components/Navbar';
+import { Routes, Route, Link } from 'react-router-dom';
+import IdeaDetailView from './pages/IdeaDetailView';
+import ProfileDashboard from './pages/ProfileDashboard';
 
-function App() {
-  const { ideas, loading, error, refresh } = useIdeas();
+function IdeaFeed({ ideas, loading, error, setIsModalOpen }) {
+  return (
+    <div className="flex flex-col gap-6">
+      <header className="flex items-center justify-between pb-2 border-b border-white/5">
+        <div className="flex gap-4">
+          <button className="text-sm font-bold border-b-2 border-primary text-slate-100 pb-1 bg-transparent border-none cursor-pointer">Trending</button>
+          <button className="text-sm font-medium text-slate-500 hover:text-slate-100 transition-colors pb-1 bg-transparent border-none cursor-pointer">Newest</button>
+          <button className="text-sm font-medium text-slate-500 hover:text-slate-100 transition-colors pb-1 bg-transparent border-none cursor-pointer">Top Voted</button>
+        </div>
+        <div className="flex items-center gap-2 text-slate-500 text-sm">
+          <span>Show:</span>
+          <select className="bg-transparent border-none text-slate-200 text-xs focus:ring-0 cursor-pointer outline-none">
+            <option>All Ideas</option>
+            <option>Minecraft</option>
+            <option>Plugins</option>
+          </select>
+        </div>
+      </header>
+
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-xl text-red-400 text-sm">
+          Failed to load ideas: {error}
+        </div>
+      )}
+
+      <div className="flex flex-col gap-4">
+        {loading ? (
+          [1, 2, 3].map(i => (
+            <div key={i} className="bg-neutral-dark/50 border border-slate-800 rounded-xl h-40 animate-pulse" />
+          ))
+        ) : ideas.length > 0 ? (
+          ideas.map(idea => (
+            <IdeaCard key={idea.id} idea={idea} />
+          ))
+        ) : (
+          <div className="bg-neutral-dark border border-slate-800 border-dashed p-12 text-center rounded-xl">
+            <p className="text-slate-500 mb-4">No ideas found. Be the first to post!</p>
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="bg-primary/20 text-primary px-6 py-2 rounded-lg border border-primary/40 hover:bg-primary/30 transition-all font-bold cursor-pointer"
+            >
+              CREATE FIRST IDEA
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default function App() {
+  const { ideas, loading, error, refreshIdeas } = useIdeas();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // We need to override the Navbar in the Layout or pass the state down
-  // For simplicity since Layout uses Navbar internally, we'll pass the toggle logic
-
   return (
-    <>
+    <div className="min-h-screen">
       <Navbar onPostClick={() => setIsModalOpen(true)} />
-      <div className="container mt-6 flex gap-8">
-        {/* Simplified Layout Structure to handle State better */}
-        {/* We'll move Sidebar into App or a more flexible Layout */}
-        <Layout isCustomNavbar>
-          <div className="flex flex-col gap-6">
-            <header className="flex items-center justify-between">
-              <div>
-                <h2 className="text-2xl font-bold">Recommended for you</h2>
-                <p className="text-text-secondary text-sm">Discover top-voted mod ideas from the community.</p>
-              </div>
-              <div className="flex gap-2">
-                <button className="bg-white/5 px-4 py-2 rounded-full text-xs font-bold hover:bg-white/10 transition-all border border-white/5">NEWEST</button>
-                <button className="bg-accent-neon/10 text-accent-neon px-4 py-2 rounded-full text-xs font-bold border border-accent-neon/20 transition-all">TRENDING</button>
-              </div>
-            </header>
 
-            {error && (
-              <div className="bg-red-500/10 border border-red-500/20 p-4 rounded-xl text-red-400 text-sm">
-                Failed to load ideas: {error}
-              </div>
-            )}
-
-            <div className="grid gap-4">
-              {loading ? (
-                [1, 2, 3].map(i => (
-                  <div key={i} className="glass p-6 rounded-2xl h-40 animate-pulse bg-white/5" />
-                ))
-              ) : ideas.length > 0 ? (
-                ideas.map(idea => (
-                  <IdeaCard key={idea.id} idea={idea} />
-                ))
-              ) : (
-                <div className="glass p-12 text-center rounded-3xl border-dashed">
-                  <p className="text-text-muted mb-4">No ideas found. Be the first to post!</p>
-                  <button
-                    onClick={() => setIsModalOpen(true)}
-                    className="bg-accent-neon/10 text-accent-neon px-6 py-2 rounded-full border border-accent-neon/20 hover:bg-accent-neon/20 transition-all font-bold"
-                  >
-                    CREATE FIRST IDEA
-                  </button>
-                </div>
-              )}
-            </div>
-          </div>
-        </Layout>
-      </div>
+      <Routes>
+        <Route path="/" element={
+          <Layout>
+            <IdeaFeed
+              ideas={ideas}
+              loading={loading}
+              error={error}
+              setIsModalOpen={setIsModalOpen}
+            />
+          </Layout>
+        } />
+        <Route path="/idea/:id" element={<IdeaDetailView />} />
+        <Route path="/profile" element={<ProfileDashboard />} />
+      </Routes>
 
       <CreateIdeaModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onRefresh={refresh}
+        onRefresh={refreshIdeas}
       />
-    </>
+    </div>
   );
 }
-
-export default App;
