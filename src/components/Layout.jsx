@@ -1,8 +1,11 @@
 import { Box, Puzzle, Wrench, Paintbrush, Trophy, Layout as LayoutIcon, ChevronRight } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const SidebarItem = ({ icon: Icon, label, active = false, onClick }) => (
-    <button
+    <motion.button
         onClick={onClick}
+        whileHover={{ x: 4 }}
+        whileTap={{ scale: 0.98 }}
         className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-all border-none cursor-pointer text-left group ${active ? 'bg-primary/10 text-primary border border-primary/20 shadow-[0_0_15px_rgba(13,242,242,0.1)]' : 'text-slate-400 hover:bg-neutral-dark bg-transparent'
             }`}
     >
@@ -11,7 +14,7 @@ const SidebarItem = ({ icon: Icon, label, active = false, onClick }) => (
             <span className="text-sm font-medium">{label}</span>
         </div>
         {active && <ChevronRight size={14} className="text-primary/50" />}
-    </button>
+    </motion.button>
 );
 
 export default function Layout({ children, activeCategory = 'All', onCategoryChange }) {

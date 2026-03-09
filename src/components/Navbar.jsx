@@ -96,7 +96,7 @@ export default function Navbar({ onPostClick, searchQuery, onSearchChange }) {
                         Post Idea
                     </button>
 
-                    <div className="h-8 w-[1px] bg-slate-800 mx-1 hidden md:block"></div>
+                    <div className="h-8 w-px bg-slate-800 mx-1 hidden md:block"></div>
 
                     <button className="p-2 text-slate-500 hover:text-slate-100 transition-colors bg-transparent border-none cursor-pointer relative">
                         <Bell size={20} />
@@ -123,7 +123,7 @@ export default function Navbar({ onPostClick, searchQuery, onSearchChange }) {
                                     animate={{ opacity: 1, y: 0, scale: 1 }}
                                     exit={{ opacity: 0, y: 10, scale: 0.95 }}
                                     transition={{ duration: 0.2 }}
-                                    className="absolute right-0 mt-3 w-56 bg-neutral-dark border border-slate-800 rounded-2xl shadow-2xl p-2 z-[200] overflow-hidden"
+                                    className="absolute right-0 mt-3 w-56 bg-neutral-dark border border-slate-800 rounded-2xl shadow-2xl p-2 z-200 overflow-hidden"
                                 >
                                     <div className="px-3 py-3 border-b border-white/5 mb-2">
                                         <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">Signed in as</p>

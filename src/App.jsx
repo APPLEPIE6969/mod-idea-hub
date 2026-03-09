@@ -1,6 +1,7 @@
 import Layout from './components/Layout';
 import IdeaCard from './components/IdeaCard';
 import CreateIdeaModal from './components/CreateIdeaModal';
+import CustomDropdown from './components/CustomDropdown';
 import { useIdeas } from './hooks/useIdeas';
 import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
@@ -20,22 +21,48 @@ const PageWrapper = ({ children }) => (
   </motion.div>
 );
 
-function IdeaFeed({ ideas, loading, error, setIsModalOpen, onVote }) {
+function IdeaFeed({ ideas, loading, error, setIsModalOpen, onVote, categoryFilter, onCategoryChange }) {
+  const [activeTab, setActiveTab] = useState('Trending');
+
+  const tabs = ['Trending', 'Newest', 'Top Voted'];
+
+  const filterOptions = [
+    { value: 'All', label: 'All Ideas' },
+    { value: 'Minecraft Mod', label: 'Minecraft' },
+    { value: 'Plugin', label: 'Plugins' },
+    { value: 'Tool', label: 'Tools' }
+  ];
+
   return (
     <div className="flex flex-col gap-6">
       <header className="flex items-center justify-between pb-2 border-b border-white/5">
-        <div className="flex gap-4">
-          <button className="text-sm font-bold border-b-2 border-primary text-slate-100 pb-1 bg-transparent border-none cursor-pointer">Trending</button>
-          <button className="text-sm font-medium text-slate-500 hover:text-slate-100 transition-colors pb-1 bg-transparent border-none cursor-pointer">Newest</button>
-          <button className="text-sm font-medium text-slate-500 hover:text-slate-100 transition-colors pb-1 bg-transparent border-none cursor-pointer">Top Voted</button>
+        <div className="flex gap-6">
+          {tabs.map(tab => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(tab)}
+              className={`text-sm font-bold pb-4 relative transition-colors bg-transparent border-none cursor-pointer ${activeTab === tab ? 'text-slate-100' : 'text-slate-500 hover:text-slate-300'
+                }`}
+            >
+              {tab}
+              {activeTab === tab && (
+                <motion.div
+                  layoutId="activeTab"
+                  className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary"
+                  transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                />
+              )}
+            </button>
+          ))}
         </div>
-        <div className="flex items-center gap-2 text-slate-500 text-sm">
-          <span>Show:</span>
-          <select className="bg-transparent border-none text-slate-200 text-xs focus:ring-0 cursor-pointer outline-none">
-            <option>All Ideas</option>
-            <option>Minecraft</option>
-            <option>Plugins</option>
-          </select>
+        <div className="flex items-center gap-3">
+          <span className="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Filter:</span>
+          <CustomDropdown
+            options={filterOptions}
+            value={categoryFilter || 'All'}
+            onChange={onCategoryChange}
+            className="min-w-[160px]"
+          />
         </div>
       </header>
 
@@ -112,6 +139,8 @@ export default function App() {
                   error={error}
                   setIsModalOpen={setIsModalOpen}
                   onVote={voteIdea}
+                  categoryFilter={categoryFilter}
+                  onCategoryChange={setCategoryFilter}
                 />
               </Layout>
             </PageWrapper>

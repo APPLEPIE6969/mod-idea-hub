@@ -130,7 +130,7 @@ export default function ProfileDashboard() {
                     </div>
                     <div className="flex items-center gap-4">
                         <div className="flex bg-neutral-dark rounded-lg p-1 border border-slate-800">
-                            <button className="p-1.5 bg-slate-800 rounded-md text-primary bg-transparent border-none cursor-pointer"><LayoutGrid size={16} /></button>
+                            <button className="p-1.5 bg-slate-800 rounded-md text-primary border-none cursor-pointer"><LayoutGrid size={16} /></button>
                             <button className="p-1.5 text-slate-500 bg-transparent border-none cursor-pointer"><List size={16} /></button>
                         </div>
                     </div>

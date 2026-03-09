@@ -2,6 +2,7 @@ import { X, Send, Info, Lightbulb } from 'lucide-react';
 import { useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { motion, AnimatePresence } from 'framer-motion';
+import CustomDropdown from './CustomDropdown';
 
 export default function CreateIdeaModal({ isOpen, onClose, onRefresh }) {
     const [formData, setFormData] = useState({
@@ -11,6 +12,14 @@ export default function CreateIdeaModal({ isOpen, onClose, onRefresh }) {
         tags: ''
     });
     const [loading, setLoading] = useState(false);
+
+    const categoryOptions = [
+        { value: 'Minecraft Mod', label: 'Minecraft Mod' },
+        { value: 'Plugin', label: 'Plugin' },
+        { value: 'Resource Pack', label: 'Resource Pack' },
+        { value: 'Data Pack', label: 'Data Pack' },
+        { value: 'Tool', label: 'Tool' }
+    ];
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -108,20 +117,12 @@ export default function CreateIdeaModal({ isOpen, onClose, onRefresh }) {
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="flex flex-col gap-2">
-                                        <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Category</label>
-                                        <select
-                                            className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-slate-100 focus:ring-1 focus:ring-primary focus:border-primary transition-all outline-none appearance-none cursor-pointer"
-                                            value={formData.category}
-                                            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                                        >
-                                            <option>Minecraft Mod</option>
-                                            <option>Plugin</option>
-                                            <option>Resource Pack</option>
-                                            <option>Data Pack</option>
-                                            <option>Tool</option>
-                                        </select>
-                                    </div>
+                                    <CustomDropdown
+                                        label="Category"
+                                        options={categoryOptions}
+                                        value={formData.category}
+                                        onChange={(val) => setFormData({ ...formData, category: val })}
+                                    />
                                     <div className="flex flex-col gap-2">
                                         <label className="text-xs font-bold text-slate-500 uppercase tracking-widest px-1">Tags (comma separated)</label>
                                         <input
