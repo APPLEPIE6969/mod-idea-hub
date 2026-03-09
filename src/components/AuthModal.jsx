@@ -25,7 +25,8 @@ export default function AuthModal({ isOpen, onClose }) {
                     email,
                     password,
                     options: {
-                        data: { username }
+                        data: { username },
+                        emailRedirectTo: window.location.origin
                     }
                 });
                 if (error) throw error;
