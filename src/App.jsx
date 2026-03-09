@@ -2,13 +2,25 @@ import Layout from './components/Layout';
 import IdeaCard from './components/IdeaCard';
 import CreateIdeaModal from './components/CreateIdeaModal';
 import { useIdeas } from './hooks/useIdeas';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import IdeaDetailView from './pages/IdeaDetailView';
 import ProfileDashboard from './pages/ProfileDashboard';
 
-function IdeaFeed({ ideas, loading, error, setIsModalOpen }) {
+const PageWrapper = ({ children }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 10 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -10 }}
+    transition={{ duration: 0.3, ease: 'easeOut' }}
+  >
+    {children}
+  </motion.div>
+);
+
+function IdeaFeed({ ideas, loading, error, setIsModalOpen, onVote }) {
   return (
     <div className="flex flex-col gap-6">
       <header className="flex items-center justify-between pb-2 border-b border-white/5">
@@ -70,7 +82,13 @@ export default function App() {
     categoryFilter,
     setCategoryFilter
   } = useIdeas();
+
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   return (
     <div className="min-h-screen">
@@ -80,24 +98,36 @@ export default function App() {
         onSearchChange={setSearchQuery}
       />
 
-      <Routes>
-        <Route path="/" element={
-          <Layout
-            activeCategory={categoryFilter}
-            onCategoryChange={setCategoryFilter}
-          >
-            <IdeaFeed
-              ideas={ideas}
-              loading={loading}
-              error={error}
-              setIsModalOpen={setIsModalOpen}
-              onVote={voteIdea}
-            />
-          </Layout>
-        } />
-        <Route path="/idea/:id" element={<IdeaDetailView />} />
-        <Route path="/profile" element={<ProfileDashboard />} />
-      </Routes>
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route path="/" element={
+            <PageWrapper>
+              <Layout
+                activeCategory={categoryFilter}
+                onCategoryChange={setCategoryFilter}
+              >
+                <IdeaFeed
+                  ideas={ideas}
+                  loading={loading}
+                  error={error}
+                  setIsModalOpen={setIsModalOpen}
+                  onVote={voteIdea}
+                />
+              </Layout>
+            </PageWrapper>
+          } />
+          <Route path="/idea/:id" element={
+            <PageWrapper>
+              <IdeaDetailView />
+            </PageWrapper>
+          } />
+          <Route path="/profile" element={
+            <PageWrapper>
+              <ProfileDashboard />
+            </PageWrapper>
+          } />
+        </Routes>
+      </AnimatePresence>
 
       <CreateIdeaModal
         isOpen={isModalOpen}
